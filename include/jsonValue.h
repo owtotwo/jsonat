@@ -5,20 +5,22 @@
 
 #include <ostream>
 
-#include "String.h"
-#include "Array.h"
-#include "Object.h"
-#include "Number.h"
-
 
 // please use nullptr(nullptr_t) instead of NULL(int)
 #ifdef NULL
 #undef NULL // clear macro
 #endif
 
-namespace Json {
-	
+namespace jsonat {
+
+// Forward declaration
+class Object;
+class Array;
+class String;
+typedef double Number;
 typedef bool Boolen;
+
+
 
 class Value {
 public:

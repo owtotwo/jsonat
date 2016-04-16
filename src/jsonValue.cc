@@ -1,8 +1,8 @@
-#include "Value.h"
+#include "Json.h"
 
 #include <ostream>
 
-namespace Json {
+namespace jsonat {
 
 Value::Value() : 
 	type(Value::NULL), 
@@ -181,7 +181,7 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 		os << "null";
 		break;
 	case Value::OBJECT:
-		// os << pt.getObject();
+		os << pt.getObject();
 		break;
 	case Value::STRING:
 		os << pt.getString();
@@ -190,7 +190,7 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 		os << pt.getNumber();
 		break;
 	case Value::ARRAY:
-		// os << pt.getArray();
+		os << pt.getArray();
 		break;
 	case Value::BOOLEN:
 		os << pt.getBoolen();

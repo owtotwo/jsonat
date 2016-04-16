@@ -3,10 +3,10 @@
 #ifndef JSON_H
 #define JSON_H
 
-#include "Value.h"
-#include "Object.h"
-#include "Number.h"
-#include "String.h"
-#include "Array.h"
+#include "jsonValue.h"
+#include "jsonObject.h"
+#include "jsonNumber.h"
+#include "jsonString.h"
+#include "jsonArray.h"
 
 #endif // JSON_H

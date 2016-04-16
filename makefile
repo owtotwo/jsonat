@@ -1,18 +1,35 @@
 ROOT_DIR = .
 SRC_DIR = $(ROOT_DIR)/src
-INCLUDE_DIR = $(ROOT_DIR)/include
+INC_DIR = $(ROOT_DIR)/include
 
-CPP_FLAG = -std=c++11 -I$(INCLUDE_DIR)
+CPP_FLAG = -std=c++11 -I$(INC_DIR)
 
-test.exe : test.o  Value.o
-	g++ $(CPP_FLAG) test.o Value.o -o test.exe
+CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
+	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc
 
-test.o : $(SRC_DIR)/test.cpp  $(INCLUDE_DIR)/Json.h
-	g++ -c $(CPP_FLAG) $(SRC_DIR)/test.cpp
+OBJ_FILE = parser.o  jsonArray.o  jsonString.o  \
+	jsonValue.o  jsonObject.o
 
-Value.o : Value.cpp  $(INCLUDE_DIR)/String.h  $(INCLUDE_DIR)/Array.h  \
-			$(INCLUDE_DIR)/Object.h  $(INCLUDE_DIR)/Number.h 
-	g++ -c $(CPP_FLAG) $(SRC_DIR)/Value.cpp
+jsonat.exe : $(OBJ_FILE)
+	g++ $(CPP_FLAG) $(OBJ_FILE) -o jsonat.exe
+
+
+parser.o : $(SRC_DIR)/parser.cpp  $(INC_DIR)/Json.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/parser.cpp
+
+
+jsonArray.o : $(SRC_DIR)/jsonArray.cc  $(INC_DIR)/jsonArray.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonArray.cc
+
+jsonObject.o : $(SRC_DIR)/jsonObject.cc  $(INC_DIR)/jsonObject.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonObject.cc
+
+jsonString.o : $(SRC_DIR)/jsonString.cc  $(INC_DIR)/jsonString.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonString.cc
+
+jsonValue.o : $(SRC_DIR)/jsonValue.cc  $(INC_DIR)/jsonValue.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonValue.cc
+
 
 clean : 
-	rm test.exe test.o Value.o
+	rm  $(OBJ_FILE)
