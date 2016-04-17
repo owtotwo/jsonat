@@ -10,8 +10,12 @@ CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 OBJ_FILE = main.o  parser.o  jsonArray.o  jsonString.o  \
 	jsonValue.o  jsonObject.o
 
-jsonat.exe : $(OBJ_FILE)
-	g++ $(CPP_FLAG) $(OBJ_FILE) -o jsonat.exe
+
+EXEC_FILE = jsonat
+
+
+$(EXEC_FILE) : $(OBJ_FILE)
+	g++ $(CPP_FLAG) $(OBJ_FILE) -o $(EXEC_FILE)
 
 
 main.o : $(SRC_DIR)/main.cpp  $(INC_DIR)/Json.h
@@ -40,4 +44,4 @@ jsonValue.o : $(SRC_DIR)/jsonValue.cc  $(INC_DIR)/jsonValue.h
 
 
 clean : 
-	rm  $(OBJ_FILE) jsonat.exe
+	rm  -f $(OBJ_FILE) $(EXEC_FILE) $(EXEC_FILE).exe
