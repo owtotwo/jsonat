@@ -75,21 +75,6 @@ static bool isHexDigit(char hex_digit) {
 		|| (hex_digit >= 'A' && hex_digit <= 'F');
 }
 
-
-#if 0
-static bool isValidNumber(const string& s) { // no use
-	regex json_number("^-?(0|[1-9][0-9]*)(\\.[0-9]+)?((e|E)(\\+|-)?[0-9]+)?$");
-	return regex_match(s, json_number);
-}
-
-static Number strToNumber(const string& str) { // no use
-	double d = 0.0;
-	istringstream ss(str);
-	ss >> d;
-	return Number(d);
-}
-#endif
-
 static char unicodeToAscii(const char hex_digits[4]) {
 	istringstream ss(hex_digits);
 	int c = 0;
@@ -137,6 +122,7 @@ void parse_Json(istream& is) {
 
 static Object parse_Object(istream& is) {
 	debug_printf("parse_Object()");
+
 	Object obj;
 
 	identifier_match(is, '{', "left_brace");
@@ -240,7 +226,7 @@ static String parse_String(istream& is) {
 		}
 
 		if (next_char == '\\') {
-			switch (get_next_char(is)) {
+			switch (next_char = get_next_char(is)) {
 				case '\"': str.addChar('\"'); break;
 				case '\\': str.addChar('\\'); break;
 				case '/': str.addChar('/'); break;
@@ -259,8 +245,11 @@ static String parse_String(istream& is) {
 					}
 					char ascii_char = unicodeToAscii(hex_digits);
 					str.addChar(ascii_char);
+					break;
 				}
-				default: error_alert("unable to identify the escape char");
+				default: error_alert(
+						std::string("unable to identify the escape char \'") 
+						+ next_char + '\'');
 			}
 		} else {
 			str.addChar(next_char);
@@ -287,7 +276,7 @@ static Number parse_Number(istream& is) {
 } // namespace jsonat
 
 
-
+#if 0
 int main(int argc, char* argv[]) {
 	try { 
 		jsonat::parse_Json(std::cin); 
@@ -298,3 +287,4 @@ int main(int argc, char* argv[]) {
 	}
 	return 0;
 }
+#endif

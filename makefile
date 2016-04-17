@@ -7,12 +7,15 @@ CPP_FLAG = -std=c++11 -I$(INC_DIR) -g -Wall
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc
 
-OBJ_FILE = parser.o  jsonArray.o  jsonString.o  \
+OBJ_FILE = main.o  parser.o  jsonArray.o  jsonString.o  \
 	jsonValue.o  jsonObject.o
 
 jsonat.exe : $(OBJ_FILE)
 	g++ $(CPP_FLAG) $(OBJ_FILE) -o jsonat.exe
 
+
+main.o : $(SRC_DIR)/main.cpp  $(INC_DIR)/Json.h
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/main.cpp
 
 parser.o : $(SRC_DIR)/parser.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/parser.cpp

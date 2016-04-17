@@ -23,8 +23,9 @@ std::ostream& operator<<(std::ostream& os, const Object& pt) {
 	assert(layer >= 0);
 	++layer;
 
-	os << "{\n";
+	os << "{";
 	if (pt.size() > 0) {
+		os << "\n";
 		auto it = pt.begin();
 		for (int i = 0; i < layer; i++) os << indent_string;
 		os << it->first << ": " << it->second;
@@ -33,9 +34,10 @@ std::ostream& operator<<(std::ostream& os, const Object& pt) {
 			for (int i = 0; i < layer; i++) os << indent_string;
 			os << it->first << ": " << it->second;
 		}
+		os << "\n";
+		for (int i = 0; i < layer - 1; i++) os << indent_string;
 	}
-	os << "\n";
-	for (int i = 0; i < layer - 1; i++) os << indent_string;
+	
 	os << "}";
 
 	--layer;
