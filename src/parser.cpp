@@ -75,17 +75,20 @@ static bool isHexDigit(char hex_digit) {
 		|| (hex_digit >= 'A' && hex_digit <= 'F');
 }
 
-static bool isValidNumber(const string& s) {
+
+#if 0
+static bool isValidNumber(const string& s) { // no use
 	regex json_number("^-?(0|[1-9][0-9]*)(\\.[0-9]+)?((e|E)(\\+|-)?[0-9]+)?$");
 	return regex_match(s, json_number);
 }
 
-static Number strToNumber(const string& str) {
+static Number strToNumber(const string& str) { // no use
 	double d = 0.0;
 	istringstream ss(str);
 	ss >> d;
 	return Number(d);
 }
+#endif
 
 static char unicodeToAscii(const char hex_digits[4]) {
 	istringstream ss(hex_digits);
@@ -101,7 +104,7 @@ static char unicodeToAscii(const char hex_digits[4]) {
 static Value parse_Value_aux(istream& is, const string& _literal, const Value& _val) {
 	debug_printf("parse_Value_aux()");
 
-	for (int i = 0; i < _literal.length(); i++) {
+	for (unsigned i = 0; i < _literal.length(); i++) {
 		if (look_next_char(is) != _literal[i]) {
 			error_alert("Do you mean \'" + _literal + "\'?");
 			return Value();

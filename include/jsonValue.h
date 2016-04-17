@@ -54,6 +54,12 @@ public:
 	const Number& getNumber() const;
 	const Boolen& getBoolen() const;
 
+	Value& operator=(const Value& pt);
+	Value& operator=(const String& pt);
+	Value& operator=(const Array& pt) ;
+	Value& operator=(const Object& pt);
+	Value& operator=(const Number& pt);
+	Value& operator=(const Boolen& pt);
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	
 private:

@@ -2,7 +2,7 @@ ROOT_DIR = .
 SRC_DIR = $(ROOT_DIR)/src
 INC_DIR = $(ROOT_DIR)/include
 
-CPP_FLAG = -std=c++11 -I$(INC_DIR)
+CPP_FLAG = -std=c++11 -I$(INC_DIR) -g -Wall
 
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc
@@ -17,6 +17,10 @@ jsonat.exe : $(OBJ_FILE)
 parser.o : $(SRC_DIR)/parser.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/parser.cpp
 
+$(INC_DIR)/Json.h : $(INC_DIR)/jsonValue.h  $(INC_DIR)/jsonObject.h  \
+	$(INC_DIR)/jsonNumber.h  $(INC_DIR)/jsonString.h  \
+	$(INC_DIR)/jsonArray.h
+	touch $(INC_DIR)/Json.h
 
 jsonArray.o : $(SRC_DIR)/jsonArray.cc  $(INC_DIR)/jsonArray.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonArray.cc
@@ -31,5 +35,6 @@ jsonValue.o : $(SRC_DIR)/jsonValue.cc  $(INC_DIR)/jsonValue.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonValue.cc
 
 
+
 clean : 
-	rm  $(OBJ_FILE)
+	rm  $(OBJ_FILE) jsonat.exe

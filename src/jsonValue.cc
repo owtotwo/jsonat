@@ -1,6 +1,7 @@
 #include "Json.h"
 
 #include <ostream>
+#include <cassert>
 
 namespace jsonat {
 
@@ -34,7 +35,7 @@ Value::Value(const Value& pt) :
 	case Value::BOOLEN: 
 		boolen_ptr = new Boolen(pt.getBoolen()); break;
 	default:
-		break;
+		assert("should not be here" == 0); 
 	}
 }
 	
@@ -108,20 +109,21 @@ Value::Value(int pt) :
 	number_ptr = new Number(pt);
 }
 
+
 Value::~Value() {
 	switch (type) {
 	case Value::NULL: 
 		/* do nothing */; break;
 	case Value::OBJECT:
-		delete object_ptr; break;
+		delete object_ptr; object_ptr = nullptr; break;
 	case Value::STRING:
-		delete string_ptr; break;
+		delete string_ptr; string_ptr = nullptr; break;
 	case Value::NUMBER: 
-		delete number_ptr; break;
+		delete number_ptr; number_ptr = nullptr; break;
 	case Value::ARRAY: 
-		delete array_ptr; break;
+		delete array_ptr; array_ptr = nullptr; break;
 	case Value::BOOLEN: 
-		delete boolen_ptr; break;
+		delete boolen_ptr; boolen_ptr = nullptr; break;
 	default:
 		break;
 	}
@@ -196,11 +198,81 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 		os << pt.getBoolen();
 		break;
 	default:
-		break;
+		assert("should not be here" == 0);
 	}
 	return os;
 }
 
+Value& Value::operator=(const Value& pt) {
+
+	this->~Value();
+
+	type = pt.getType();
+
+	switch (type) {
+	case Value::NULL: 
+		/* do nothing */; break;
+	case Value::OBJECT:
+		object_ptr = new Object(pt.getObject()); break;
+	case Value::STRING:
+		string_ptr = new String(pt.getString()); break;
+	case Value::NUMBER: 
+		number_ptr = new Number(pt.getNumber()); break;
+	case Value::ARRAY: 
+		array_ptr = new Array(pt.getArray()); break;
+	case Value::BOOLEN: 
+		boolen_ptr = new Boolen(pt.getBoolen()); break;
+	default:
+		assert("should not be here" == 0); 
+	}
+
+	return *this;
+}
+
+Value& Value::operator=(const String& pt) {
+	this->~Value();
+
+	type = Value::STRING;
+	string_ptr = new String(pt);
+
+	return *this;
+}
+
+Value& Value::operator=(const Array& pt) {
+	this->~Value();
+
+	type = Value::ARRAY;
+	array_ptr = new Array(pt);
+
+	return *this;
+}
+
+Value& Value::operator=(const Object& pt) {
+	this->~Value();
+
+	type = Value::OBJECT;
+	object_ptr = new Object(pt);
+
+	return *this;
+}
+
+Value& Value::operator=(const Number& pt) {
+	this->~Value();
+
+	type = Value::NUMBER;
+	number_ptr = new Number(pt);
+
+	return *this;
+}
+
+Value& Value::operator=(const Boolen& pt) {
+	this->~Value();
+
+	type = Value::BOOLEN;
+	boolen_ptr = new Boolen(pt);
+
+	return *this;
+}
 
 
 } // namespace Json
