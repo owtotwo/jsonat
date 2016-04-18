@@ -7,27 +7,31 @@ CPP_FLAG = -std=c++11 -I$(INC_DIR) -g -Wall
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc
 
-OBJ_FILE = main.o  parser.o  jsonArray.o  jsonString.o  \
+HEAD_FILE = $(INC_DIR)/jsonValue.h  $(INC_DIR)/jsonObject.h  \
+	$(INC_DIR)/jsonNumber.h  $(INC_DIR)/jsonString.h  \
+	$(INC_DIR)/jsonArray.h  $(INC_DIR)/jsonJson.h
+
+OBJ_FILE = main.o  jsonJson.o  jsonArray.o  jsonString.o  \
 	jsonValue.o  jsonObject.o
 
-
 EXEC_FILE = jsonat
-
 
 $(EXEC_FILE) : $(OBJ_FILE)
 	g++ $(CPP_FLAG) $(OBJ_FILE) -o $(EXEC_FILE)
 
 
+
+
+
 main.o : $(SRC_DIR)/main.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/main.cpp
 
-parser.o : $(SRC_DIR)/parser.cpp  $(INC_DIR)/Json.h
-	g++ $(CPP_FLAG) -c $(SRC_DIR)/parser.cpp
 
-$(INC_DIR)/Json.h : $(INC_DIR)/jsonValue.h  $(INC_DIR)/jsonObject.h  \
-	$(INC_DIR)/jsonNumber.h  $(INC_DIR)/jsonString.h  \
-	$(INC_DIR)/jsonArray.h
+$(INC_DIR)/Json.h : $(HEAD_FILE)
 	touch $(INC_DIR)/Json.h
+
+jsonJson.o : $(SRC_DIR)/jsonJson.cc  $(HEAD_FILE)
+	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonJson.cc
 
 jsonArray.o : $(SRC_DIR)/jsonArray.cc  $(INC_DIR)/jsonArray.h
 	g++ $(CPP_FLAG) -c $(SRC_DIR)/jsonArray.cc
