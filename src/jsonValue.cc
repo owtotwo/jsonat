@@ -11,7 +11,7 @@ Value::Value() :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {}
+	boolean_ptr(nullptr) {}
 	
 Value::Value(const Value& pt) : 
 	type(pt.getType()),
@@ -19,7 +19,7 @@ Value::Value(const Value& pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 
 	switch (type) {
 	case Value::NULL: 
@@ -32,8 +32,8 @@ Value::Value(const Value& pt) :
 		number_ptr = new Number(pt.getNumber()); break;
 	case Value::ARRAY: 
 		array_ptr = new Array(pt.getArray()); break;
-	case Value::BOOLEN: 
-		boolen_ptr = new Boolen(pt.getBoolen()); break;
+	case Value::BOOLEAN: 
+		boolean_ptr = new Boolean(pt.getBoolean()); break;
 	default:
 		assert("should not be here" == 0); 
 	}
@@ -45,7 +45,7 @@ Value::Value(const String& pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	string_ptr = new String(pt);
 }
 
@@ -55,7 +55,7 @@ Value::Value(const Object& pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	object_ptr = new Object(pt);
 }
 
@@ -65,7 +65,7 @@ Value::Value(const Number& pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	number_ptr = new Number(pt);
 }
 
@@ -75,18 +75,18 @@ Value::Value(const Array& pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	array_ptr = new Array(pt);
 }
 
-Value::Value(const Boolen& pt) :
-	type(Value::BOOLEN), 
+Value::Value(const Boolean& pt) :
+	type(Value::BOOLEAN), 
 	object_ptr(nullptr), 
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
-	boolen_ptr = new Boolen(pt);
+	boolean_ptr(nullptr) {
+	boolean_ptr = new Boolean(pt);
 }
 
 Value::Value(const char* pt) :
@@ -95,7 +95,7 @@ Value::Value(const char* pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	string_ptr = new String(pt);
 }
 
@@ -105,7 +105,7 @@ Value::Value(int pt) :
 	string_ptr(nullptr),
 	number_ptr(nullptr),
 	array_ptr(nullptr),
-	boolen_ptr(nullptr) {
+	boolean_ptr(nullptr) {
 	number_ptr = new Number(pt);
 }
 
@@ -122,8 +122,8 @@ Value::~Value() {
 		delete number_ptr; number_ptr = nullptr; break;
 	case Value::ARRAY: 
 		delete array_ptr; array_ptr = nullptr; break;
-	case Value::BOOLEN: 
-		delete boolen_ptr; boolen_ptr = nullptr; break;
+	case Value::BOOLEAN: 
+		delete boolean_ptr; boolean_ptr = nullptr; break;
 	default:
 		break;
 	}
@@ -145,8 +145,8 @@ bool Value::isNumber() const {
 	return type == Value::NUMBER;
 }
 
-bool Value::isBoolen() const {
-	return type == Value::BOOLEN;
+bool Value::isBoolean() const {
+	return type == Value::BOOLEAN;
 }
 
 bool Value::isNull() const {
@@ -173,8 +173,8 @@ const Number& Value::getNumber() const {
 	return *number_ptr;
 }
 
-const Boolen& Value::getBoolen() const {
-	return *boolen_ptr;
+const Boolean& Value::getBoolean() const {
+	return *boolean_ptr;
 }
 
 std::ostream& operator<<(std::ostream& os, const Value& pt) {
@@ -194,8 +194,8 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 	case Value::ARRAY:
 		os << pt.getArray();
 		break;
-	case Value::BOOLEN:
-		os << pt.getBoolen();
+	case Value::BOOLEAN:
+		os << pt.getBoolean();
 		break;
 	default:
 		assert("should not be here" == 0);
@@ -220,8 +220,8 @@ Value& Value::operator=(const Value& pt) {
 		number_ptr = new Number(pt.getNumber()); break;
 	case Value::ARRAY: 
 		array_ptr = new Array(pt.getArray()); break;
-	case Value::BOOLEN: 
-		boolen_ptr = new Boolen(pt.getBoolen()); break;
+	case Value::BOOLEAN: 
+		boolean_ptr = new Boolean(pt.getBoolean()); break;
 	default:
 		assert("should not be here" == 0); 
 	}
@@ -265,11 +265,11 @@ Value& Value::operator=(const Number& pt) {
 	return *this;
 }
 
-Value& Value::operator=(const Boolen& pt) {
+Value& Value::operator=(const Boolean& pt) {
 	this->~Value();
 
-	type = Value::BOOLEN;
-	boolen_ptr = new Boolen(pt);
+	type = Value::BOOLEAN;
+	boolean_ptr = new Boolean(pt);
 
 	return *this;
 }

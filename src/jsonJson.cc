@@ -11,6 +11,7 @@
 #include "jsonNumber.h"
 #include "jsonString.h"
 #include "jsonArray.h"
+#include "jsonBoolean.h"
 
 namespace jsonat {
 
@@ -252,11 +253,11 @@ static Value parse_Value(istream& is) {
 
 	} else if (c == 't') {
 
-		val = parse_Value_aux(is, "true", Boolen(true));
+		val = parse_Value_aux(is, "true", Boolean(true));
 
 	} else if (c == 'f') {
 
-		val = parse_Value_aux(is, "false", Boolen(false));
+		val = parse_Value_aux(is, "false", Boolean(false));
 
 	} else if (c == 'n') {
 

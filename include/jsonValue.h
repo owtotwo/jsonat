@@ -17,14 +17,14 @@ namespace jsonat {
 class Object;
 class Array;
 class String;
+class Boolean;
 typedef double Number;
-typedef bool Boolen;
 
 
 
 class Value {
 public:
-	typedef enum { NULL = 0, OBJECT = 1, ARRAY, NUMBER, STRING, BOOLEN } Value_type;
+	typedef enum { NULL = 0, OBJECT = 1, ARRAY, NUMBER, STRING, BOOLEAN } Value_type;
 
 	Value();
 	Value(const Value& pt);
@@ -32,7 +32,7 @@ public:
 	Value(const Object& pt);
 	Value(const Number& pt);
 	Value(const Array& pt);
-	Value(const Boolen& pt);
+	Value(const Boolean& pt);
 
 	Value(const char* pt);
 	Value(int);
@@ -43,7 +43,7 @@ public:
 	bool isString() const;
 	bool isArray() const;
 	bool isNumber() const;
-	bool isBoolen() const;
+	bool isBoolean() const;
 	bool isNull() const;
 
 	Value_type getType() const;
@@ -52,14 +52,14 @@ public:
 	const String& getString() const;
 	const Array& getArray() const;
 	const Number& getNumber() const;
-	const Boolen& getBoolen() const;
+	const Boolean& getBoolean() const;
 
 	Value& operator=(const Value& pt);
 	Value& operator=(const String& pt);
 	Value& operator=(const Array& pt) ;
 	Value& operator=(const Object& pt);
 	Value& operator=(const Number& pt);
-	Value& operator=(const Boolen& pt);
+	Value& operator=(const Boolean& pt);
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	
 private:
@@ -68,7 +68,7 @@ private:
 	String* string_ptr;
 	Number* number_ptr;
 	Array* array_ptr;
-	Boolen* boolen_ptr;
+	Boolean* boolean_ptr;
 };
 
 

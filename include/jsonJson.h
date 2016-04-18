@@ -1,7 +1,7 @@
 // Json.h
 
-#ifndef JSONJSON_H
-#define JSONJSON_H
+#ifndef JSON_JSON_H
+#define JSON_JSON_H
 
 #include <iostream>
 
@@ -37,4 +37,4 @@ private:
 } // namespace jsonat
 
 
-#endif // JSONJSON_H
+#endif // JSON_JSON_H

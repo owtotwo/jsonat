@@ -9,6 +9,7 @@
 #include "jsonNumber.h"
 #include "jsonString.h"
 #include "jsonArray.h"
+#include "jsonBoolean.h"
 
 
 #endif // JSON_H
