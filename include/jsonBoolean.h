@@ -10,12 +10,6 @@
 namespace jsonat {
 
 
-#if 0
-
-typedef bool Boolean;
-
-#else
-
 class Boolean {
 public:
 	Boolean();
@@ -36,8 +30,6 @@ public:
 private:
 	bool b_ = false;
 };
-
-#endif
 
 } // namespace Json
 

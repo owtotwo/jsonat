@@ -17,30 +17,16 @@ void Object::addPair(const String& key, const Value& value) {
 
 std::ostream& operator<<(std::ostream& os, const Object& pt) {
 
-	static int layer = 0;
-	static const std::string indent_string = "    ";
-
-	assert(layer >= 0);
-	++layer;
-
 	os << "{";
 	if (pt.size() > 0) {
-		os << "\n";
 		auto it = pt.begin();
-		for (int i = 0; i < layer; i++) os << indent_string;
-		os << it->first << ": " << it->second;
+		os << it->first << ":" << it->second;
 		for (++it; it != pt.end(); ++it) {
-			os << ", \n";
-			for (int i = 0; i < layer; i++) os << indent_string;
-			os << it->first << ": " << it->second;
+			os << "," << it->first << ":" << it->second;
 		}
-		os << "\n";
-		for (int i = 0; i < layer - 1; i++) os << indent_string;
 	}
-	
 	os << "}";
 
-	--layer;
 	return os;
 }
 	

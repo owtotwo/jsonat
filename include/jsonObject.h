@@ -4,7 +4,7 @@
 #ifndef JSON_OBJECT_H
 #define JSON_OBJECT_H
 
-#if 0
+#if 1
 #define __USE_UNORDERED_MAP
 #else
 #define __USE_MAP

@@ -16,7 +16,7 @@ std::ostream& operator<<(std::ostream& os, const Array& pt) {
 		auto it = pt.begin();
 		os << *it;
 		for (++it; it != pt.end(); ++it) {
-			os << ", " << *it;
+			os << "," << *it;
 		}
 	}
 	os << "]";
