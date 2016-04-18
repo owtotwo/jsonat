@@ -5,7 +5,7 @@
 #define JSON_ARRAY_H
 
 #include <vector>
-#include <iostream>
+#include <ostream>
 
 namespace jsonat {
 
@@ -26,7 +26,8 @@ public:
 	
 	void addValue(const value_type& val);
 	friend std::ostream& operator<<(std::ostream& os, const Array& pt);
-
+	friend void toString(std::ostream& os, const Array& pt, 
+		int indent, const std::string& indent_string);
 };
 
 } // namespace Json

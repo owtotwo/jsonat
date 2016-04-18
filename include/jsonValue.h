@@ -60,15 +60,18 @@ public:
 	Value& operator=(const Object& pt);
 	Value& operator=(const Number& pt);
 	Value& operator=(const Boolean& pt);
+	
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
+	friend void toString(std::ostream& os, const Value& pt, 
+		int indent, const std::string& indent_string);
 	
 private:
-	Value_type type;
-	Object* object_ptr;
-	String* string_ptr;
-	Number* number_ptr;
-	Array* array_ptr;
-	Boolean* boolean_ptr;
+	Value_type type = NULL;
+	Object* object_ptr = nullptr;
+	String* string_ptr = nullptr;
+	Number* number_ptr = nullptr;
+	Array* array_ptr = nullptr;
+	Boolean* boolean_ptr = nullptr;
 };
 
 

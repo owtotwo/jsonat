@@ -41,8 +41,11 @@ public:
 	Object(const Object& obj);
 
 	void addPair(const String& key, const Value& value);
+	
 	friend std::ostream& operator<<(std::ostream& os, const Object& pt);
-
+	friend void toString(std::ostream& os, const Object& pt, 
+		int indent, const std::string& indent_string);
+	
 };
 
 } // namespace Json

@@ -5,21 +5,9 @@
 
 namespace jsonat {
 
-Value::Value() : 
-	type(Value::NULL), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {}
+Value::Value() : type(Value::NULL) {}
 	
-Value::Value(const Value& pt) : 
-	type(pt.getType()),
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+Value::Value(const Value& pt) : type(pt.getType()) {
 
 	switch (type) {
 	case Value::NULL: 
@@ -39,75 +27,33 @@ Value::Value(const Value& pt) :
 	}
 }
 	
-Value::Value(const String& pt) :
-	type(Value::STRING), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+
+Value::Value(const String& pt) : type(Value::STRING) {
 	string_ptr = new String(pt);
 }
 
-Value::Value(const Object& pt) : 
-	type(Value::OBJECT), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+Value::Value(const Object& pt) : type(Value::OBJECT) {
 	object_ptr = new Object(pt);
 }
 
-Value::Value(const Number& pt) : 
-	type(Value::NUMBER), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+Value::Value(const Number& pt) : type(Value::NUMBER) {
 	number_ptr = new Number(pt);
 }
 
-Value::Value(const Array& pt) :
-	type(Value::ARRAY), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+Value::Value(const Array& pt) : type(Value::ARRAY) {
 	array_ptr = new Array(pt);
 }
 
-Value::Value(const Boolean& pt) :
-	type(Value::BOOLEAN), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
+Value::Value(const Boolean& pt) : type(Value::BOOLEAN) {
 	boolean_ptr = new Boolean(pt);
 }
 
-Value::Value(const char* pt) :
-	type(Value::STRING), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
-	string_ptr = new String(pt);
-}
 
-Value::Value(int pt) :
-	type(Value::NUMBER), 
-	object_ptr(nullptr), 
-	string_ptr(nullptr),
-	number_ptr(nullptr),
-	array_ptr(nullptr),
-	boolean_ptr(nullptr) {
-	number_ptr = new Number(pt);
-}
+
+Value::Value(const char* pt) : Value::Value(String(pt)) {}
+
+Value::Value(int pt) : Value::Value(Number(pt)) {}
+
 
 
 Value::~Value() {
@@ -177,6 +123,7 @@ const Boolean& Value::getBoolean() const {
 	return *boolean_ptr;
 }
 
+
 std::ostream& operator<<(std::ostream& os, const Value& pt) {
 	switch (pt.getType()) {
 	case Value::NULL:
@@ -203,8 +150,10 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 	return os;
 }
 
-Value& Value::operator=(const Value& pt) {
 
+Value& Value::operator=(const Value& pt) {
+	if (this == &pt) return *this;
+	
 	this->~Value();
 
 	type = pt.getType();
@@ -230,6 +179,8 @@ Value& Value::operator=(const Value& pt) {
 }
 
 Value& Value::operator=(const String& pt) {
+	if (string_ptr == &pt) return *this;
+	
 	this->~Value();
 
 	type = Value::STRING;
@@ -239,6 +190,8 @@ Value& Value::operator=(const String& pt) {
 }
 
 Value& Value::operator=(const Array& pt) {
+	if (array_ptr == &pt) return *this;
+	
 	this->~Value();
 
 	type = Value::ARRAY;
@@ -248,6 +201,8 @@ Value& Value::operator=(const Array& pt) {
 }
 
 Value& Value::operator=(const Object& pt) {
+	if (object_ptr == &pt) return *this;
+	
 	this->~Value();
 
 	type = Value::OBJECT;
@@ -257,6 +212,8 @@ Value& Value::operator=(const Object& pt) {
 }
 
 Value& Value::operator=(const Number& pt) {
+	if (number_ptr == &pt) return *this;
+	
 	this->~Value();
 
 	type = Value::NUMBER;
@@ -266,6 +223,8 @@ Value& Value::operator=(const Number& pt) {
 }
 
 Value& Value::operator=(const Boolean& pt) {
+	if (boolean_ptr == &pt) return *this;
+	
 	this->~Value();
 
 	type = Value::BOOLEAN;
@@ -274,5 +233,31 @@ Value& Value::operator=(const Boolean& pt) {
 	return *this;
 }
 
+void toString(std::ostream& os, const Value& pt, 
+		int indent, const std::string& indent_string) {
+	switch (pt.getType()) {
+	case Value::NULL:
+		os << "null";
+		break;
+	case Value::OBJECT:
+		toString(os, pt.getObject(), indent, indent_string);
+		break;
+	case Value::STRING:
+		toString(os, pt.getString());
+		break;
+	case Value::NUMBER:
+		toString(os, pt.getNumber());
+		break;
+	case Value::ARRAY:
+		toString(os, pt.getArray(), indent, indent_string);
+		break;
+	case Value::BOOLEAN:
+		toString(os, pt.getBoolean());
+		break;
+	default:
+		assert("should not be here" == 0);
+	}
+	
+}
 
 } // namespace Json

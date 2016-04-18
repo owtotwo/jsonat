@@ -6,6 +6,6 @@
 
 int main(int argc, char* argv[]) {
 	jsonat::Value val = jsonat::Json::parse(std::cin);
-	std::cout << val << std::endl;
+	jsonat::Json::pretty(std::cout, val);
 	return 0;
 }

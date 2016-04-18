@@ -43,21 +43,32 @@ Value Json::parse(std::istream& is) {
 }
 
  
-void Json::stringify(const Value& val, std::ostream& os) {
-	// TODO();
-	os << val;
+void Json::stringify(std::ostream& os, const Value& val) {
+	toString(os, val, 0, "");
 }
 
   
 std::string Json::stringify(const Value& val) {
-	// TODO();
 	std::string s;
 	std::ostringstream ss(s);
-	ss << val;
+	Json::stringify(ss, val);
 	return s;
 }
 	
 
+void Json::pretty(std::ostream& os, const Value& val,
+		const std::string& indent_string) {
+	toString(os, val, 1, indent_string);
+}
+
+  
+std::string Json::pretty(const Value& val, 
+		const std::string& indent_string) {
+	std::string s;
+	std::ostringstream ss(s);
+	Json::pretty(ss, val, indent_string);
+	return s;
+}
 
 
 
@@ -338,6 +349,14 @@ static Number parse_Number(istream& is) {
 
 	return num;
 }
+
+
+
+// --------------------------- toString ----------------------------
+
+
+
+
 
 } // namespace jsonat
 

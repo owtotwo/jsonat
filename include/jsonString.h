@@ -19,6 +19,8 @@ public:
 	void addChar(char c);
 
 	friend std::ostream& operator<<(std::ostream& os, const String& s);
+	friend void toString(std::ostream& os, const String& pt);
+	
 };
 
 } // namespace Json

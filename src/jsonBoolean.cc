@@ -35,5 +35,8 @@ std::ostream& operator<<(std::ostream& os, Boolean pt) {
 	return os << (pt ? "true" : "false");
 }
 
+void toString(std::ostream& os, const Boolean& pt) {
+	os << pt;
+}
 	
 } // namespace jsonat

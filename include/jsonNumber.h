@@ -8,6 +8,8 @@ namespace jsonat {
 
 typedef double Number;
 
+inline void toString(std::ostream& os, const Number& pt) { os << pt; }
+
 } // namespace Json
 
 

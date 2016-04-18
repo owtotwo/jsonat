@@ -23,12 +23,18 @@ public:
 	
 	// Serialize the JavaScript like Value via output stream, 
 	// such as std::cout, file out stream 
-	static void stringify(const Value& val, std::ostream& os);
+	static void stringify(std::ostream& os, const Value& val);
 	
 	// Serialize and return C++ string  
 	static std::string stringify(const Value& val);
 	
+	// Serialize the JavaScript like Value via output stream in a pretty format,
+	static void pretty(std::ostream& os, 
+		const Value& val, const std::string& indent_string = "    ");
 	
+	// Serialize and return formatted C++ string
+	static std::string pretty(const Value& val, const std::string& indent_string = "    ");
+		
 private:
 	/* nothing */
 };	
