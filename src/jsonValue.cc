@@ -1,7 +1,14 @@
-#include "Json.h"
+#include "jsonValue.h"
+
+#include "jsonObject.h"
+#include "jsonNumber.h"
+#include "jsonString.h"
+#include "jsonArray.h"
+#include "jsonBoolean.h"
 
 #include <ostream>
 #include <cassert>
+#include <string>
 
 namespace jsonat {
 
@@ -55,6 +62,41 @@ Value::Value(const char* pt) : Value::Value(String(pt)) {}
 Value::Value(int pt) : Value::Value(Number(pt)) {}
 
 
+Value::operator std::string() {
+	if (this->type != Value::STRING) return std::string();
+	return this->getString();
+}
+
+Value::operator double() {
+	if (this->type != Value::NUMBER) return double();
+	return this->getNumber();
+}
+
+Value::operator int() {
+	return double(*this);
+}
+
+Value::operator bool() {
+	switch (this->type) {
+	case Value::NULL: 
+		return false; 
+	case Value::OBJECT:
+		return this->getObject().size() != 0;
+	case Value::STRING:
+		return this->getString().size() != 0;
+	case Value::NUMBER: 
+		return bool(this->getNumber());
+	case Value::ARRAY:
+		return this->getArray().size() != 0;
+	case Value::BOOLEAN:
+		return this->getBoolean();
+	default:
+		assert("should not be here" == 0);
+	}
+	return false;
+}
+
+
 
 Value::~Value() {
 	switch (type) {
@@ -71,7 +113,7 @@ Value::~Value() {
 	case Value::BOOLEAN: 
 		delete boolean_ptr; boolean_ptr = nullptr; break;
 	default:
-		break;
+		assert("should not be here" == 0);
 	}
 }
 

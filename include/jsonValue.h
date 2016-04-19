@@ -61,6 +61,11 @@ public:
 	Value& operator=(const Number& pt);
 	Value& operator=(const Boolean& pt);
 	
+	operator std::string();
+	operator double();
+	operator int();
+	operator bool();
+	
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
 		int indent, const std::string& indent_string);

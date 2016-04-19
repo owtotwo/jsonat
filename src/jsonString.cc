@@ -1,11 +1,16 @@
 #include <string>
 #include "jsonString.h"
+#include "jsonValue.h"
 
 namespace jsonat {
 	
 String::String() {}
 String::String(const String& str) : std::string(str) {}
 String::String(const char* str) : std::string(str) {}
+String::String(const Value& pt) {
+	if (pt.getType() != Value::STRING) return;
+	*this = pt.getString();
+}
 
 void String::addChar(char c) { this->operator+=(c); }
 

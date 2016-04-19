@@ -39,6 +39,7 @@ private:
 	/* nothing */
 };	
 	
+using JSON = Json;
 	
 } // namespace jsonat
 

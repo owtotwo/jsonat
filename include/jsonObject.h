@@ -39,6 +39,9 @@ class Object : public SuperClass {
 public:
 	Object();
 	Object(const Object& obj);
+	Object(const Value& pt);
+
+	Object& operator=(const Object& pt) = default;
 
 	void addPair(const String& key, const Value& value);
 	

@@ -9,13 +9,18 @@
 
 namespace jsonat {
 
+class Value;
+
 class String : public std::string {
 public:
 
 	String();
 	String(const String& str);
 	String(const char* str);
+	String(const Value& pt);
 
+	String& operator=(const String& pt) = default;
+	
 	void addChar(char c);
 
 	friend std::ostream& operator<<(std::ostream& os, const String& s);

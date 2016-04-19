@@ -10,6 +10,11 @@ namespace jsonat {
 Object::Object() : Object::SuperClass() {}
 Object::Object(const Object& obj) : Object::SuperClass(obj) {}
 
+Object::Object(const Value& pt) {
+	if (pt.getType() != Value::OBJECT) return;
+	*this = pt.getObject();
+}
+
 void Object::addPair(const String& key, const Value& value) {
 	this->insert(Object::value_type(key, value));
 }

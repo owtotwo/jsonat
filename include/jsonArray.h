@@ -23,6 +23,10 @@ public:
 	
 	Array();
 	Array(size_t n);
+	Array(const Array& pt);
+	Array(const Value& pt);
+	
+	Array& operator=(const Array& pt) = default;
 	
 	void addValue(const value_type& val);
 	friend std::ostream& operator<<(std::ostream& os, const Array& pt);

@@ -13,7 +13,7 @@
 	"version": "0.1.0",
 
 	// The command is tsc. Assumes that tsc has been installed using npm install -g typescript
-	"command": "make",
+	"command": " ",
 
 	// The command is a shell script
 	"isShellCommand": true,
@@ -28,7 +28,7 @@
 			"taskName": "build",
 			"suppressTaskName": true,
 			"isBuildCommand": true,
-			"args": [],
+			"args": ["make"],
 			"showOutput": "always",
 			"echoCommand": true
 		},
@@ -36,7 +36,22 @@
 			"taskName": "clean",
 			"suppressTaskName": true,
 			"isBuildCommand": false,
-			"args": ["clean"],
+			"args": ["make", "clean"],
+			"showOutput": "always",
+			"echoCommand": true
+		},
+		{
+			"taskName": "test",
+			"suppressTaskName": true,
+			"isTestCommand": true,
+			"args": ["make", "test"],
+			"showOutput": "always",
+			"echoCommand": true
+		},
+		{
+			"taskName": "hey",
+			"suppressTaskName": true,
+			"args": ["echo", "hey"],
 			"showOutput": "always",
 			"echoCommand": true
 		}

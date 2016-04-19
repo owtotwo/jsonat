@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include "jsonJson.h"
+
 #include "jsonValue.h"
 #include "jsonObject.h"
 #include "jsonNumber.h"
@@ -32,9 +33,9 @@ Value Json::parse(std::istream& is) {
 	Value val; // null
 	
 	try { val = parse_Json(is); } catch (const std::string& _err) {
-		std::cerr << _err << std::endl;
+		std::cerr << "jsonat error: " << _err << std::endl;
 	} catch (const char* _err) {
-		std::cerr << _err << std::endl;
+		std::cerr << "jsonat error: " << _err << std::endl;
 	} catch (...) {
 		throw "the exception threw from could not be identified";
 	}
