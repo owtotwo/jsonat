@@ -4,7 +4,7 @@ INC_DIR = $(ROOT_DIR)/include
 TEST_DIR = $(ROOT_DIR)/test
 LIB_DIR = $(ROOT_DIR)/lib
 SAMPLE_DIR = $(ROOT_DIR)/sample
-CPP_FLAG = -std=c++11 -I$(INC_DIR) -g -Wall
+CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
@@ -86,18 +86,20 @@ test_Boolean.o : $(TEST_DIR)/test_Boolean.cpp  $(INC_DIR)/jsonBoolean.h  \
 # =============================================================
 # Sample file
 
-sample :  sample1.o  $(LIB_DIR)/libjsonat.a  
-	g++ $(CPP_FLAG)  sample1.o  $(LIB_DIR)/libjsonat.a  -o  sample1
+sample :  sample2.o  $(LIB_DIR)/libjsonat.a  
+	g++ $(CPP_FLAG)  sample2.o  $(LIB_DIR)/libjsonat.a  -o  sample2
 
 sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
 
+sample2.o : $(SAMPLE_DIR)/sample2.cpp  $(INC_DIR)/Json.h
+	g++ $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample2.cpp
 
 # =============================================================
 # clean
 
 clean : 
-	rm  -f  $(OBJ_FILE) $(EXEC_FILE) $(EXEC_FILE).exe
+	rm  -f  $(OBJ_FILE)  main.o  $(EXEC_FILE)  $(EXEC_FILE).exe
 
 clean-test : 
 	rm  -f  test_main.o  test_Boolean.o  jsonBoolean.o  test-all  test-all.exe

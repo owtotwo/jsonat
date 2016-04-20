@@ -1,0 +1,15 @@
+// Jsonat -- A Json Library in C++
+// Copyright (c) 2016 sysu_AT
+// All rights reserved.
+
+1. Output the escape charactors in form like '\n' or '\r'
+2. Api should be redesigned completely :
+   Json g; // g = null;
+   Json a = "string";
+   Json b = 123.4e-05;
+   Json c = true;
+   Json d = false;
+   Json e = make_object({{"hello", 123}, {"world", true}});
+   Json f = make_array({a, b, c, d});
+   
+   
