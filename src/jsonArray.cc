@@ -1,16 +1,37 @@
+#include <utility> // for move()
+#include <ostream>
+
 #include "jsonArray.h"
 #include "jsonValue.h"
+
 
 namespace jsonat {
 
 Array::Array() : Array::SuperClass() {}
-Array::Array(size_t n) : Array::SuperClass(n) {}
 
 Array::Array(const Array& pt) : Array::SuperClass(pt) {}
 Array::Array(const Value& pt) : Array::SuperClass() {
 	if (pt.getType() != Value::ARRAY) return;
 	*this = pt.getArray();
 }
+
+Array::Array(Value&& pt) {
+	if (pt.getType() != Value::ARRAY) return;
+	*this = std::move(*pt.array_ptr);
+}
+
+Array& Array::operator=(const Value& pt) {
+	if (pt.getType() != Value::ARRAY) return *this;
+	return *this = pt.getArray();
+}
+
+Array& Array::operator=(Value&& pt) {
+	if (pt.getType() != Value::ARRAY) return *this;
+	return *this = std::move(*pt.array_ptr);
+}
+
+
+
 
 void Array::addValue(const Array::value_type& val) { 
 	this->push_back(val); 

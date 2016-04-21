@@ -36,6 +36,25 @@ Value::Value(const Value& pt) : type(pt.getType()) {
 	}
 }
 	
+Value::Value(Value&& pt) : type(pt.getType()) {
+	switch (type) {
+	case Value::NULL: 
+		/* do nothing */; break;
+	case Value::OBJECT:
+		object_ptr = pt.object_ptr; pt.object_ptr = nullptr; break;
+	case Value::STRING:
+		string_ptr = pt.string_ptr; pt.string_ptr = nullptr; break;
+	case Value::NUMBER: 
+		number_ptr = pt.number_ptr; pt.number_ptr = nullptr; break;
+	case Value::ARRAY: 
+		array_ptr = pt.array_ptr; pt.array_ptr = nullptr; break;
+	case Value::BOOLEAN: 
+		boolean_ptr = pt.boolean_ptr; pt.boolean_ptr = nullptr; break;
+	default:
+		assert("should not be here" == 0); 
+	}
+}	
+
 
 Value::Value(const String& pt) : type(Value::STRING) {
 	string_ptr = new String(pt);
@@ -89,6 +108,79 @@ Value::Value(std::initializer_list<Value> il) {
 		*this = Array(il);
 	}
 }
+
+
+
+
+Value::Value(String&& pt) : type(Value::STRING) {
+	string_ptr = new String(std::move(pt));
+}
+
+Value::Value(Object&& pt) : type(Value::OBJECT) {
+	object_ptr = new Object(std::move(pt));
+}
+
+Value::Value(Number&& pt) : type(Value::NUMBER) {
+	number_ptr = new Number(std::move(pt));
+}
+
+Value::Value(Array&& pt) : type(Value::ARRAY) {
+	array_ptr = new Array(std::move(pt));
+}
+
+Value::Value(Boolean&& pt) : type(Value::BOOLEAN) {
+	boolean_ptr = new Boolean(std::move(pt));
+}
+
+
+
+Value& Value::operator=(Value&& pt) {
+	switch (pt.getType()) {
+	case Value::NULL: 
+		/* do nothing */; break;
+	case Value::OBJECT:
+		object_ptr = pt.object_ptr; pt.object_ptr = nullptr; break;
+	case Value::STRING:
+		string_ptr = pt.string_ptr; pt.string_ptr = nullptr; break;
+	case Value::NUMBER: 
+		number_ptr = pt.number_ptr; pt.number_ptr = nullptr; break;
+	case Value::ARRAY: 
+		array_ptr = pt.array_ptr; pt.array_ptr = nullptr; break;
+	case Value::BOOLEAN: 
+		boolean_ptr = pt.boolean_ptr; pt.boolean_ptr = nullptr; break;
+	default:
+		assert("should not be here" == 0); 
+	}
+	return *this;
+} 
+
+Value& Value::operator=(String&& pt) {
+	string_ptr = new String(std::move(pt));
+	return *this;
+} 
+
+Value& Value::operator=(Array&& pt) {
+	array_ptr = new Array(std::move(pt));
+	return *this;
+}  
+
+Value& Value::operator=(Object&& pt) {
+	object_ptr = new Object(std::move(pt));
+	return *this;
+} 
+
+Value& Value::operator=(Number&& pt) {
+	number_ptr = new Number(std::move(pt));
+	return *this;
+} 
+
+Value& Value::operator=(Boolean&& pt) {
+	boolean_ptr = new Boolean(std::move(pt));
+	return *this;
+} 
+
+
+
 
 
 

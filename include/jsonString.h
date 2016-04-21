@@ -14,12 +14,18 @@ class Value;
 class String : public std::string {
 public:
 
+	using std::string::string;
+
 	String();
 	String(const String& str);
-	String(const char* str);
+	String(String&& pt) = default;
 	String(const Value& pt);
+	String(Value&& pt);
 
 	String& operator=(const String& pt) = default;
+	String& operator=(String&& pt) = default;
+	String& operator=(const Value& pt);
+	String& operator=(Value&& pt);
 	
 	void addChar(char c);
 

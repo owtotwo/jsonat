@@ -2,18 +2,37 @@
 #include "jsonString.h"
 #include "jsonValue.h"
 
-#include <iostream>
+#include <ostream>
+#include <utility> // for move()
 #include <cassert>
 
 namespace jsonat {
 
 Object::Object() : Object::SuperClass() {}
-Object::Object(const Object& obj) : Object::SuperClass(obj) {}
+// Object::Object(const Object& obj) : Object::SuperClass(obj) {}
 
 Object::Object(const Value& pt) {
 	if (pt.getType() != Value::OBJECT) return;
 	*this = pt.getObject();
 }
+
+Object::Object(Value&& pt) {
+	if (pt.getType() != Value::OBJECT) return;
+	*this = std::move(*pt.object_ptr);
+}
+
+
+Object& Object::operator=(const Value& pt) {
+	if (pt.getType() != Value::OBJECT) return *this;
+	return *this = pt.getObject();
+}
+
+Object& Object::operator=(Value&& pt) {
+	if (pt.getType() != Value::OBJECT) return *this;
+	return *this = std::move(*pt.object_ptr);
+}
+
+
 
 void Object::addPair(const String& key, const Value& value) {
 	this->insert(Object::value_type(key, value));

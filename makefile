@@ -93,7 +93,7 @@ sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
 
 sample2.o : $(SAMPLE_DIR)/sample2.cpp  $(INC_DIR)/Json.h
-	g++ $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample2.cpp
+	g++ $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample2.cpp
 
 # =============================================================
 # clean

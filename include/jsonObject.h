@@ -4,7 +4,7 @@
 #ifndef JSON_OBJECT_H
 #define JSON_OBJECT_H
 
-#if 0
+#if 1
 #define __USE_UNORDERED_MAP
 #else
 #define __USE_MAP
@@ -41,10 +41,15 @@ public:
 	using SuperClass::SuperClass;
 
 	Object();
-	Object(const Object& obj);
+	Object(const Object& obj) = default;
+	Object(Object&& pt) = default;
 	Object(const Value& pt);
-
+	Object(Value&& pt); 
+	
 	Object& operator=(const Object& pt) = default;
+	Object& operator=(Object&& pt) = default;
+	Object& operator=(const Value& pt);
+	Object& operator=(Value&& pt);
 
 	void addPair(const String& key, const Value& value);
 	
