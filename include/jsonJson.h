@@ -4,13 +4,17 @@
 #define JSON_JSON_H
 
 #include <iostream>
+#include "jsonValue.h"
 
 namespace jsonat {
 
 class Value;
 
-class Json {
+class Json : public Value {
 public:
+
+	using Value::Value;
+
 	// ----------- API ------------
 	
 	

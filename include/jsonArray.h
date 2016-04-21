@@ -21,6 +21,8 @@ class Array : public std::vector<Value> {
 
 public:
 	
+	using SuperClass::SuperClass;
+	
 	Array();
 	Array(size_t n);
 	Array(const Array& pt);

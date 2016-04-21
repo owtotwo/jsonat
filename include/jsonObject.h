@@ -4,7 +4,7 @@
 #ifndef JSON_OBJECT_H
 #define JSON_OBJECT_H
 
-#if 1
+#if 0
 #define __USE_UNORDERED_MAP
 #else
 #define __USE_MAP
@@ -37,6 +37,9 @@ class Value;
 class Object : public SuperClass {
 	typedef jsonat::SuperClass SuperClass;
 public:
+
+	using SuperClass::SuperClass;
+
 	Object();
 	Object(const Object& obj);
 	Object(const Value& pt);

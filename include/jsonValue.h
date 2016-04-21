@@ -4,7 +4,9 @@
 #define JSON_VALUE_H
 
 #include <ostream>
+#include <initializer_list>
 
+#include "jsonNumber.h"
 
 // please use nullptr(nullptr_t) instead of NULL(int)
 #ifdef NULL
@@ -18,8 +20,6 @@ class Object;
 class Array;
 class String;
 class Boolean;
-typedef double Number;
-
 
 
 class Value {
@@ -36,6 +36,9 @@ public:
 
 	Value(const char* pt);
 	Value(int);
+	
+	Value(std::initializer_list<Value> il);
+	
 
 	~Value();
 	

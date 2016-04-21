@@ -45,15 +45,14 @@ Value Json::parse(std::istream& is) {
 
  
 void Json::stringify(std::ostream& os, const Value& val) {
-	toString(os, val, 0, "");
+	toString(os, val, 1, "");
 }
 
   
 std::string Json::stringify(const Value& val) {
-	std::string s;
-	std::ostringstream ss(s);
+	std::ostringstream ss;
 	Json::stringify(ss, val);
-	return s;
+	return ss.str();
 }
 	
 
@@ -65,10 +64,9 @@ void Json::pretty(std::ostream& os, const Value& val,
   
 std::string Json::pretty(const Value& val, 
 		const std::string& indent_string) {
-	std::string s;
-	std::ostringstream ss(s);
+	std::ostringstream ss;
 	Json::pretty(ss, val, indent_string);
-	return s;
+	return ss.str();
 }
 
 

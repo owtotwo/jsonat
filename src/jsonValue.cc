@@ -9,6 +9,8 @@
 #include <ostream>
 #include <cassert>
 #include <string>
+#include <initializer_list>
+#include <algorithm>
 
 namespace jsonat {
 
@@ -57,9 +59,37 @@ Value::Value(const Boolean& pt) : type(Value::BOOLEAN) {
 
 
 
+
 Value::Value(const char* pt) : Value::Value(String(pt)) {}
 
 Value::Value(int pt) : Value::Value(Number(pt)) {}
+
+// Value::Value(initializer_list<Object::value_type> il) : Value::Value(Object(il)) {}
+
+// Value::Value(initializer_list<Array::value_type> il) : Value::Value(Array(il)) {}
+
+// Value::Value(std::initializer_list<std::pair<const String, Value>> il) : Value::Value(Object(il)) {}
+
+Value::Value(std::initializer_list<Value> il) {
+	// type deduction
+	// if Value is {String, Value} then create an Object, otherwise create an Array.
+	auto is_kv_pair = [](const Value& x) -> bool {
+		return (x.isArray() && (x.getArray().size() == 2) && x.getArray().front().isString());
+	};
+	
+	
+	if (std::all_of(il.begin(), il.end(), is_kv_pair)) { // create Object
+
+		Object obj;
+		auto insert_kv_pair_into_obj = [&obj](const Value& x){ obj.addPair(x.getArray()[0], x.getArray()[1]); };
+		std::for_each(il.begin(), il.end(), insert_kv_pair_into_obj);
+		*this = obj;
+		
+	} else { // create Array
+		*this = Array(il);
+	}
+}
+
 
 
 Value::operator std::string() {
