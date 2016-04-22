@@ -13,3 +13,10 @@
    Json f = make_array({a, b, c, d});
    
 3. make_array() and make_object();
+4. apply the jsonat in another project to read and write the configure files.
+5. it should be able to use like a["address"]["street"], or b[4][1].
+6. maybe support the comments...? (not the standard in JSON)
+   i.e. : {"age" : "18" /* this is the comment */} // all rights a comment too
+   I think it could implement by two pass parsing. (first for the comments, 
+   second for the data)
+7. roundtrip test.

@@ -86,14 +86,17 @@ test_Boolean.o : $(TEST_DIR)/test_Boolean.cpp  $(INC_DIR)/jsonBoolean.h  \
 # =============================================================
 # Sample file
 
-sample :  sample2.o  $(LIB_DIR)/libjsonat.a  
-	g++ $(CPP_FLAG)  sample2.o  $(LIB_DIR)/libjsonat.a  -o  sample2
+sample :  sample3.o  $(LIB_DIR)/libjsonat.a  
+	g++ $(CPP_FLAG)  sample3.o  $(LIB_DIR)/libjsonat.a  -o  sample3
 
 sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
 
 sample2.o : $(SAMPLE_DIR)/sample2.cpp  $(INC_DIR)/Json.h
 	g++ $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample2.cpp
+	
+sample3.o : $(SAMPLE_DIR)/sample3.cpp  $(INC_DIR)/Json.h
+	g++ $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample3.cpp
 
 # =============================================================
 # clean
