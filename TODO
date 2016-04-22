@@ -20,3 +20,6 @@
    I think it could implement by two pass parsing. (first for the comments, 
    second for the data)
 7. roundtrip test.
+8. When I see the API of MySQL connect Java (Class ResultSet), I think it is 
+   what I want to design... for the configure files saving and loading, like 
+   a database but concise and simple use.
