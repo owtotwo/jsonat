@@ -17,12 +17,12 @@ String::String(Value&& pt) {
 }
 
 String& String::operator=(const Value& pt) {
-	if (pt.getType() != Value::STRING) return *this;
+	if (pt.getType() != Value::STRING || this == pt.string_ptr) return *this;
 	return *this = pt.getString();
 }
 
 String& String::operator=(Value&& pt) {
-	if (pt.getType() != Value::STRING) return *this;
+	if (pt.getType() != Value::STRING || this == pt.string_ptr) return *this;
 	return *this = std::move(*pt.string_ptr);
 }
 

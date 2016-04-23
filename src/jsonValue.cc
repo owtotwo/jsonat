@@ -17,7 +17,7 @@ namespace jsonat {
 Value::Value() : type(Value::NULL) {}
 	
 Value::Value(const Value& pt) : type(pt.getType()) {
-
+	
 	switch (type) {
 	case Value::NULL: 
 		/* do nothing */; break;
@@ -37,6 +37,7 @@ Value::Value(const Value& pt) : type(pt.getType()) {
 }
 	
 Value::Value(Value&& pt) : type(pt.getType()) {
+	
 	switch (type) {
 	case Value::NULL: 
 		/* do nothing */; break;
@@ -90,23 +91,22 @@ Value::Value(int pt) : Value::Value(Number(pt)) {}
 // Value::Value(std::initializer_list<std::pair<const String, Value>> il) : Value::Value(Object(il)) {}
 
 Value::Value(std::initializer_list<Value> il) {
+
 	// type deduction
 	// if Value is {String, Value} then create an Object, otherwise create an Array.
 	auto is_kv_pair = [](const Value& x) -> bool {
 		return (x.isArray() && (x.getArray().size() == 2) && x.getArray().front().isString());
 	};
 	
-	
 	if (std::all_of(il.begin(), il.end(), is_kv_pair)) { // create Object
-
 		Object obj;
 		auto insert_kv_pair_into_obj = [&obj](const Value& x){ obj.addPair(x.getArray()[0], x.getArray()[1]); };
 		std::for_each(il.begin(), il.end(), insert_kv_pair_into_obj);
 		*this = obj;
-		
 	} else { // create Array
 		*this = Array(il);
 	}
+
 }
 
 
@@ -135,6 +135,12 @@ Value::Value(Boolean&& pt) : type(Value::BOOLEAN) {
 
 
 Value& Value::operator=(Value&& pt) {
+	if (this == &pt) return *this;
+	
+	this->~Value();
+	
+	type = pt.getType();
+	
 	switch (pt.getType()) {
 	case Value::NULL: 
 		/* do nothing */; break;
@@ -155,26 +161,41 @@ Value& Value::operator=(Value&& pt) {
 } 
 
 Value& Value::operator=(String&& pt) {
+	if (string_ptr == &pt) return *this;
+	this->~Value();
+	type = Value::STRING;
 	string_ptr = new String(std::move(pt));
 	return *this;
 } 
 
 Value& Value::operator=(Array&& pt) {
+	if (array_ptr == &pt) return *this;
+	this->~Value();
+	type = Value::ARRAY;
 	array_ptr = new Array(std::move(pt));
 	return *this;
 }  
 
 Value& Value::operator=(Object&& pt) {
+	if (object_ptr == &pt) return *this;
+	this->~Value();
+	type = Value::OBJECT;
 	object_ptr = new Object(std::move(pt));
 	return *this;
 } 
 
 Value& Value::operator=(Number&& pt) {
+	if (number_ptr == &pt) return *this;
+	this->~Value();
+	type = Value::NUMBER;
 	number_ptr = new Number(std::move(pt));
 	return *this;
 } 
 
 Value& Value::operator=(Boolean&& pt) {
+	if (boolean_ptr == &pt) return *this;
+	this->~Value();
+	type = Value::BOOLEAN;
 	boolean_ptr = new Boolean(std::move(pt));
 	return *this;
 } 

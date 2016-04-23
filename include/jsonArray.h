@@ -16,9 +16,10 @@ class Value;
 class Array : public std::vector<Value> {
 
 	typedef std::vector<Value> SuperClass;
-	typedef Value value_type;
 
 public:
+
+	typedef Value value_type;
 	
 	using SuperClass::SuperClass;
 	using SuperClass::operator=;

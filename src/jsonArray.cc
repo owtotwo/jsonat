@@ -21,12 +21,12 @@ Array::Array(Value&& pt) {
 }
 
 Array& Array::operator=(const Value& pt) {
-	if (pt.getType() != Value::ARRAY) return *this;
+	if (pt.getType() != Value::ARRAY || this == pt.array_ptr) return *this;
 	return *this = pt.getArray();
 }
 
 Array& Array::operator=(Value&& pt) {
-	if (pt.getType() != Value::ARRAY) return *this;
+	if (pt.getType() != Value::ARRAY || this == pt.array_ptr) return *this;
 	return *this = std::move(*pt.array_ptr);
 }
 

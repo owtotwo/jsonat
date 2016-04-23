@@ -23,12 +23,12 @@ Object::Object(Value&& pt) {
 
 
 Object& Object::operator=(const Value& pt) {
-	if (pt.getType() != Value::OBJECT) return *this;
+	if (pt.getType() != Value::OBJECT || this == pt.object_ptr) return *this;
 	return *this = pt.getObject();
 }
 
 Object& Object::operator=(Value&& pt) {
-	if (pt.getType() != Value::OBJECT) return *this;
+	if (pt.getType() != Value::OBJECT || this == pt.object_ptr) return *this;
 	return *this = std::move(*pt.object_ptr);
 }
 

@@ -16,7 +16,23 @@
 4. apply the jsonat in another project to read and write the configure files.
 5. it should be able to use like a["address"]["street"], or b[4][1].
 6. maybe support the comments...? (not the standard in JSON)
-   i.e. : {"age" : "18" /* this is the comment */} // all rights a comment too
+   i.e. : {"age" : "18" /* this is the comment */} // all right a comment too
    I think it could implement by two pass parsing. (first for the comments, 
    second for the data)
 7. roundtrip test.
+8. sample:
+   Json a = "hello";
+   Json b = " world\n";
+   Json c = 10;
+   Json d = 2.5;
+   Json e = true;
+   Json f = make_array({{"a", 1}, {"b", 2}, {"c", 3}});
+   a += b;
+   c = c * d;
+   e = !e;
+   f[0][0] == "a";
+   f[1][1] == 2;
+   
+   
+   
+   
