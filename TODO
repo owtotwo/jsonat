@@ -20,8 +20,10 @@
    I think it could implement by two pass parsing. (first for the comments, 
    second for the data)
 7. roundtrip test.
-<<<<<<< HEAD
-8. sample:
+8. When I see the API of MySQL connect Java (Class ResultSet), I think it is 
+   what I want to design... for the configure files saving and loading, like 
+   a database but concise and simple use.
+9. sample:
    Json a = "hello";
    Json b = " world\n";
    Json c = 10;
@@ -34,11 +36,3 @@
    f[0][0] == "a";
    f[1][1] == 2;
    
-   
-   
-   
-=======
-8. When I see the API of MySQL connect Java (Class ResultSet), I think it is 
-   what I want to design... for the configure files saving and loading, like 
-   a database but concise and simple use.
->>>>>>> c3eb96bc3e3853d2c909a3071df1a5e07d1a678f
