@@ -84,13 +84,9 @@ Value::Value(const char* pt) : Value::Value(String(pt)) {}
 
 Value::Value(int pt) : Value::Value(Number(pt)) {}
 
-// Value::Value(initializer_list<Object::value_type> il) : Value::Value(Object(il)) {}
-
-// Value::Value(initializer_list<Array::value_type> il) : Value::Value(Array(il)) {}
-
-// Value::Value(std::initializer_list<std::pair<const String, Value>> il) : Value::Value(Object(il)) {}
 
 Value::Value(std::initializer_list<Value> il) {
+	if (il.size() == 0) return; // set type = NULL
 
 	// type deduction
 	// if Value is {String, Value} then create an Object, otherwise create an Array.
