@@ -147,7 +147,7 @@ static std::string unicodeToAsciis(const char hex_digits[4]) {
 	istringstream ss(hex_digits);
 	wchar_t c = 0;
 	
-	#if 0
+	#if 1
 		uint16_t tmp = 0;
 		ss >> std::hex >> tmp;
 		c |= tmp;
