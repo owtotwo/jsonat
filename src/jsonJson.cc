@@ -4,6 +4,10 @@
 #include <cctype>
 #include <climits>
 #include <sstream>
+#include <string>
+#include <codecvt>
+#include <locale>
+#include <cstdint>
 
 #include "jsonJson.h"
 
@@ -137,15 +141,28 @@ static bool isHexDigit(char hex_digit) {
 		|| (hex_digit >= 'A' && hex_digit <= 'F');
 }
 
-static char unicodeToAscii(const char hex_digits[4]) {
+static std::string unicodeToAsciis(const char hex_digits[4]) {
+	
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	istringstream ss(hex_digits);
-	int c = 0;
-	ss >> std::hex >> c;
-	if (c < CHAR_MIN || c > CHAR_MAX) {
-		error_alert("unable to transform unicode to char"
-			" which out of range from 0 to 127");
-	}
-	return static_cast<char>(c);
+	wchar_t c = 0;
+	
+	#if 0
+		uint16_t tmp = 0;
+		ss >> std::hex >> tmp;
+		c |= tmp;
+	#else
+		ss >> std::hex >> (uint16_t&)c;
+	#endif
+	
+	#if 0
+		if (c < CHAR_MIN || c > CHAR_MAX) {
+			error_alert("unable to transform unicode to char"
+				" which out of range from 0 to 127");
+		}
+	#endif
+	
+	return cv.to_bytes(c);
 }
 
 
@@ -319,8 +336,8 @@ static String parse_String(istream& is) {
 							error_alert("invalid hexadecimal digits after \'\\u\'");
 						if (is.eof()) error_alert("the string is broken");
 					}
-					char ascii_char = unicodeToAscii(hex_digits);
-					str.addChar(ascii_char);
+					std::string ascii_string = unicodeToAsciis(hex_digits);
+					for (auto c : ascii_string) str.addChar(c);
 					break;
 				}
 				default: error_alert(
