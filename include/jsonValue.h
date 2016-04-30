@@ -82,6 +82,28 @@ public:
 	operator int();
 	operator bool();
 	
+	
+	// ------------------- New part -------------------
+	Value& operator[](size_t pos);
+	Value& operator[](const String& key);
+	
+	Value operator+(const Value& pt) const;
+	Value operator-(const Value& pt) const;
+	Value operator*(const Value& pt) const;
+	Value operator/(const Value& pt) const;
+	
+	Value& operator+=(const Value& pt);
+	Value& operator-=(const Value& pt);
+	Value& operator*=(const Value& pt);
+	Value& operator/=(const Value& pt);
+	
+	void push_back(const Value& pt);
+	void pop_back();
+	void insert(const String& key, const Value& value);
+	void insert(size_t pos, const Value& pt);
+	void erase(const String& key);
+	void erase(size_t pos);
+	
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
 		int indent, const std::string& indent_string);
