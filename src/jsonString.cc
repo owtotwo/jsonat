@@ -31,11 +31,26 @@ String& String::operator=(Value&& pt) {
 void String::addChar(char c) { this->operator+=(c); }
 
 std::ostream& operator<<(std::ostream& os, const String& s) {
-	return os << s.c_str();
+	os << '\"';
+	const char* p = s.c_str();
+	for (int i = 0; p[i] != '\0'; i++) {
+		switch (p[i]) {
+		case '\"': os << '\\' << '\"'; break;
+		case '\\': os << '\\' << '\\'; break;
+		case '/': os << '\\' << '/'; break;
+		case '\b': os << '\\' << 'b'; break;
+		case '\f': os << '\\' << 'f'; break;
+		case '\n': os << '\\' << 'n'; break;
+		case '\r': os << '\\' << 'r'; break;
+		case '\t': os << '\\' << 't'; break;
+		default: os << p[i];
+		}
+	}
+	return os << '\"';
 }
 
 void toString(std::ostream& os, const String& pt) {
-	os << "\"" << pt << "\"";
+	os << pt;
 }
 	
 } // namespace jsonat
