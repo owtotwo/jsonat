@@ -1,5 +1,6 @@
-// Boolean.h
-
+// Jsonat -- A Json Library in C++
+// Copyright (c) 2016 sysu_AT
+// All rights reserved.
 
 #ifndef JSON_BOOLEAN_H
 #define JSON_BOOLEAN_H

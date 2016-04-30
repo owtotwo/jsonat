@@ -1,4 +1,6 @@
-// Value.h
+// Jsonat -- A Json Library in C++
+// Copyright (c) 2016 sysu_AT
+// All rights reserved.
 
 #ifndef JSON_VALUE_H
 #define JSON_VALUE_H

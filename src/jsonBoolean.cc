@@ -1,4 +1,7 @@
-// jsonBoolean.cc
+// Jsonat -- A Json Library in C++
+// Copyright (c) 2016 sysu_AT
+// All rights reserved.
+
 #include <ostream>
 #include "jsonBoolean.h"
 

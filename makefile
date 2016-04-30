@@ -1,3 +1,8 @@
+# Jsonat -- A Json Library in C++
+# Copyright (c) 2016 sysu_AT
+# All rights reserved.
+
+
 ROOT_DIR = .
 SRC_DIR = $(ROOT_DIR)/src
 INC_DIR = $(ROOT_DIR)/include
