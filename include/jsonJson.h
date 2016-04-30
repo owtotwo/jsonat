@@ -18,6 +18,7 @@ public:
 	using Value::Value;
 	using Value::operator=;
 
+	Json();
 	Json(const Value& pt);
 	Json(Value&& pt);
 

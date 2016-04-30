@@ -7,6 +7,7 @@
 
 #include <ostream>
 #include <initializer_list>
+#include <string>
 
 #include "jsonNumber.h"
 
@@ -34,7 +35,9 @@ public:
 	Value(const Boolean& pt);
 
 	Value(const char* pt);
-	Value(int);
+	Value(const std::string& pt);
+	Value(int n);
+	Value(bool x);
 	
 	Value(std::initializer_list<Value> il);
 	Value(String&& pt);
@@ -83,7 +86,10 @@ public:
 	// ------------------- New part -------------------
 	Value& operator[](size_t pos);
 	Value& operator[](const String& key);
+	Value& operator[](const char* key);
 	
+	size_t size() const;
+
 	Value operator+(const Value& pt) const;
 	Value operator-(const Value& pt) const;
 	Value operator*(const Value& pt) const;
@@ -93,7 +99,16 @@ public:
 	Value& operator-=(const Value& pt);
 	Value& operator*=(const Value& pt);
 	Value& operator/=(const Value& pt);
+#if 0
+	friend operator+(const Value& pt, int n);
+	friend operator+(int n, const Value& pt);
 	
+
+	Value operator+(char c) const;
+	Value operator+(const char* c) const;
+	Value operator+(const std::string& s) const;
+	
+
 	void push_back(const Value& pt);
 	void pop_back();
 	void insert(const String& key, const Value& value);
@@ -101,6 +116,8 @@ public:
 	void erase(const String& key);
 	void erase(size_t pos);
 	
+	
+#endif
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
 		int indent, const std::string& indent_string);

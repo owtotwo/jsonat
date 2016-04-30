@@ -15,6 +15,7 @@
 #include <string>
 #include <initializer_list>
 #include <algorithm>
+#include <stdexcept>
 
 namespace jsonat {
 
@@ -86,8 +87,11 @@ Value::Value(const Boolean& pt) : type(Value::BOOLEAN_TYPE) {
 
 Value::Value(const char* pt) : Value::Value(String(pt)) {}
 
+Value::Value(const std::string& pt) : Value::Value(String(pt)) {}
+
 Value::Value(int pt) : Value::Value(Number(pt)) {}
 
+Value::Value(bool x) : Value::Value(Boolean(x)) {}
 
 Value::Value(std::initializer_list<Value> il) {
 	if (il.size() == 0) return; // set type = NULL_TYPE
@@ -444,5 +448,38 @@ void toString(std::ostream& os, const Value& pt,
 	}
 	
 }
+
+Value& Value::operator[](size_t pos) {
+	if (type != Value::ARRAY_TYPE) throw std::domain_error("type should be value::ARRAY_TYPE");
+	return (*array_ptr).at(pos);
+}
+
+Value& Value::operator[](const String& key) {
+	if (type != Value::OBJECT_TYPE) throw std::domain_error("type should be value::OBJECT_TYPE");
+	return (*object_ptr).at(key);
+}
+
+Value& Value::operator[](const char* key) {
+	return this->operator[](String(key));
+}
+
+size_t Value::size() const {
+	switch (type) {
+	case Value::ARRAY_TYPE: return this->getArray().size();
+	case Value::OBJECT_TYPE: return this->getObject().size();
+	case Value::STRING_TYPE: return this->getString().size();
+	default: throw std::domain_error("type matching error");
+	}
+}
+
+
+Value Value::operator+(const Value& pt) const {
+	switch (type) {
+	case Value::NUMBER_TYPE: return this->getNumber() + pt.getNumber();
+	case Value::STRING_TYPE: return this->getString() + pt.getString();
+	default: throw std::domain_error("type matching error");
+	}
+}
+
 
 } // namespace Json

@@ -18,8 +18,8 @@ void sample3() {
     Json e = {{"hello", 123}, {"world", true}};
     Json f = {a, b, c, d, e, g};
     
-    Json h = String(a + "world");
-    cout << h << endl;
+    // cout << e["world"] << endl;
+    for (int i = 0; i < f.size(); i++) cout << f[i] << endl;
 }
 
 int main() {

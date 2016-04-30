@@ -21,6 +21,7 @@
 
 namespace jsonat {
 
+Json::Json() : Value() {}
 Json::Json(const Value& pt) : Value(pt) {}
 Json::Json(Value&& pt) : Value(std::move(pt)) {}
 

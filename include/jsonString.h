@@ -20,9 +20,11 @@ public:
 
 	String();
 	String(const String& str);
+	
 	String(String&& pt) = default;
 	String(const Value& pt);
 	String(Value&& pt);
+	String(const std::string& s);
 
 	String& operator=(const String& pt) = default;
 	String& operator=(String&& pt) = default;
