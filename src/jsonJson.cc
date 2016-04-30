@@ -5,8 +5,6 @@
 #include <climits>
 #include <sstream>
 #include <string>
-#include <codecvt>
-#include <locale>
 #include <cstdint>
 
 #include "jsonJson.h"
@@ -141,29 +139,44 @@ static bool isHexDigit(char hex_digit) {
 		|| (hex_digit >= 'A' && hex_digit <= 'F');
 }
 
-static std::string unicodeToAsciis(const char hex_digits[4]) {
-	
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
-	istringstream ss(hex_digits);
-	wchar_t c = 0;
-	
-	#if 1
-		uint16_t tmp = 0;
-		ss >> std::hex >> tmp;
-		c |= tmp;
-	#else
-		ss >> std::hex >> (uint16_t&)c;
-	#endif
-	
-	#if 0
-		if (c < CHAR_MIN || c > CHAR_MAX) {
-			error_alert("unable to transform unicode to char"
-				" which out of range from 0 to 127");
+// convert UCS-2 big-endian to UTF-8
+static std::string ucs2be_to_utf8(const std::string& s) {
+
+	std::string ret;
+
+	for (unsigned i = 0; i < s.length() - 1; i += 2) {
+
+		uint16_t n = (((unsigned char)s[i] << 8) | ((unsigned char)s[i + 1]));
+
+		if (n < 0x0080) { // 0000-007F | 0xxxxxxx
+
+			ret += s[i + 1]; // compatible with ascii
+
+		} else if (n < 0x0800) { // 0080-07FF | 110xxxxx 10xxxxxx
+
+			ret += (0xc0 | ((n >> 6) & 0x1f));
+			ret += (0x80 | (n & 0x3f));
+
+		} else { // 0800-FFFF | 1110xxxx 10xxxxxx 10xxxxxx
+
+			ret += (0xe0 | ((n >> 12) & 0x0f));
+			ret += (0x80 | ((n >> 6) & 0x3f));
+			ret += (0x80 | (n & 0x3f));
+
 		}
-	#endif
+	}
 	
-	return cv.to_bytes(c);
+	return ret;
 }
+
+static std::string unicodeToAsciis(const char hex_digits[4]) {
+	istringstream ss(hex_digits);
+	uint16_t n = 0;
+	ss >> std::hex >> n;
+	return ucs2be_to_utf8(std::string({char(n >> 8), char(n)}));
+}
+
+
 
 
 // ---------------- parse_* function (recursive descent method) -----------------
