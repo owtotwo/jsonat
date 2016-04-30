@@ -71,9 +71,11 @@ jsonBoolean.o : $(SRC_DIR)/jsonBoolean.cc  $(INC_DIR)/jsonBoolean.h
 # ============================================================
 # Test file
 	
-test : test_main.o  test_Boolean.o  jsonBoolean.o  $(TEST_LIB_FILE)
+test : test_main.o  test_Boolean.o  jsonBoolean.o  \
+	test_roundtrip.o  $(LIB_DIR)\libjsonat.a  $(TEST_LIB_FILE)
 	g++ $(CPP_FLAG) $(TEST_FLAG)  test_main.o  test_Boolean.o  \
-		jsonBoolean.o  $(TEST_LIB_FILE)  -o  test-all
+		jsonBoolean.o  test_roundtrip.o  $(LIB_DIR)\libjsonat.a  \
+		$(TEST_LIB_FILE)  -o  test-all
 
 test_main.o : $(TEST_DIR)/test_main.cpp  $(TEST_HEAD_FILE)
 	g++ $(CPP_FLAG) -c  $(TEST_DIR)/test_main.cpp
@@ -82,6 +84,9 @@ test_Boolean.o : $(TEST_DIR)/test_Boolean.cpp  $(INC_DIR)/jsonBoolean.h  \
 	$(TEST_HEAD_FILE)
 	g++ $(CPP_FLAG) -c $(TEST_DIR)/test_Boolean.cpp
 	
+test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
+	$(TEST_HEAD_FILE)
+	g++ $(CPP_FLAG) -c $(TEST_DIR)/test_roundtrip.cpp
 
 # =============================================================
 # Sample file
@@ -105,7 +110,8 @@ clean :
 	rm  -f  $(OBJ_FILE)  main.o  $(EXEC_FILE)  $(EXEC_FILE).exe
 
 clean-test : 
-	rm  -f  test_main.o  test_Boolean.o  jsonBoolean.o  test-all  test-all.exe
+	rm  -f  test_main.o  test_Boolean.o  jsonBoolean.o  test-all  test-all.exe \
+		test_roundtrip.o  test/roundtrip_data_tmp1.json  test/roundtrip_data_tmp2.json
 
 clean-sample :
 	rm -f  sample1.o  sample1  sample1.exe

@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <cstdint>
+#include <utility>
 
 #include "jsonJson.h"
 
@@ -18,7 +19,8 @@
 
 namespace jsonat {
 
-
+Json::Json(const Value& pt) : Value(pt) {}
+Json::Json(Value&& pt) : Value(std::move(pt)) {}
 
 
 // ----------- Json API implement -----------
