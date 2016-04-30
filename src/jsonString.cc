@@ -37,7 +37,7 @@ std::ostream& operator<<(std::ostream& os, const String& s) {
 		switch (p[i]) {
 		case '\"': os << '\\' << '\"'; break;
 		case '\\': os << '\\' << '\\'; break;
-		case '/': os << '\\' << '/'; break;
+		// case '/': os << '\\' << '/'; break;
 		case '\b': os << '\\' << 'b'; break;
 		case '\f': os << '\\' << 'f'; break;
 		case '\n': os << '\\' << 'n'; break;
