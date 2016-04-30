@@ -8,21 +8,21 @@ namespace jsonat {
 String::String() {}
 String::String(const String& str) : std::string(str) {}
 String::String(const Value& pt) {
-	if (pt.getType() != Value::STRING) return;
+	if (pt.getType() != Value::STRING_TYPE) return;
 	*this = pt.getString();
 }
 String::String(Value&& pt) {
-	if (pt.getType() != Value::STRING) return;
+	if (pt.getType() != Value::STRING_TYPE) return;
 	*this = std::move(*pt.string_ptr);
 }
 
 String& String::operator=(const Value& pt) {
-	if (pt.getType() != Value::STRING || this == pt.string_ptr) return *this;
+	if (pt.getType() != Value::STRING_TYPE || this == pt.string_ptr) return *this;
 	return *this = pt.getString();
 }
 
 String& String::operator=(Value&& pt) {
-	if (pt.getType() != Value::STRING || this == pt.string_ptr) return *this;
+	if (pt.getType() != Value::STRING_TYPE || this == pt.string_ptr) return *this;
 	return *this = std::move(*pt.string_ptr);
 }
 

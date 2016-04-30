@@ -11,22 +11,22 @@ Array::Array() : Array::SuperClass() {}
 
 Array::Array(const Array& pt) : Array::SuperClass(pt) {}
 Array::Array(const Value& pt) : Array::SuperClass() {
-	if (pt.getType() != Value::ARRAY) return;
+	if (pt.getType() != Value::ARRAY_TYPE) return;
 	*this = pt.getArray();
 }
 
 Array::Array(Value&& pt) {
-	if (pt.getType() != Value::ARRAY) return;
+	if (pt.getType() != Value::ARRAY_TYPE) return;
 	*this = std::move(*pt.array_ptr);
 }
 
 Array& Array::operator=(const Value& pt) {
-	if (pt.getType() != Value::ARRAY || this == pt.array_ptr) return *this;
+	if (pt.getType() != Value::ARRAY_TYPE || this == pt.array_ptr) return *this;
 	return *this = pt.getArray();
 }
 
 Array& Array::operator=(Value&& pt) {
-	if (pt.getType() != Value::ARRAY || this == pt.array_ptr) return *this;
+	if (pt.getType() != Value::ARRAY_TYPE || this == pt.array_ptr) return *this;
 	return *this = std::move(*pt.array_ptr);
 }
 

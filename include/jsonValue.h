@@ -8,11 +8,6 @@
 
 #include "jsonNumber.h"
 
-// please use nullptr(nullptr_t) instead of NULL(int)
-#ifdef NULL
-#undef NULL // clear macro
-#endif
-
 namespace jsonat {
 
 // Forward declaration
@@ -24,7 +19,7 @@ class Boolean;
 
 class Value {
 public:
-	typedef enum { NULL = 0, OBJECT = 1, ARRAY, NUMBER, STRING, BOOLEAN } Value_type;
+	typedef enum { NULL_TYPE = 0, OBJECT_TYPE = 1, ARRAY_TYPE, NUMBER_TYPE, STRING_TYPE, BOOLEAN_TYPE } Value_type;
 
 	Value();
 	Value(const Value& pt);
@@ -114,7 +109,7 @@ public:
 	
 	
 private:
-	Value_type type = NULL;
+	Value_type type = NULL_TYPE;
 	Object* object_ptr = nullptr;
 	String* string_ptr = nullptr;
 	Number* number_ptr = nullptr;

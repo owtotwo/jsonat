@@ -12,23 +12,23 @@ Object::Object() : Object::SuperClass() {}
 // Object::Object(const Object& obj) : Object::SuperClass(obj) {}
 
 Object::Object(const Value& pt) {
-	if (pt.getType() != Value::OBJECT) return;
+	if (pt.getType() != Value::OBJECT_TYPE) return;
 	*this = pt.getObject();
 }
 
 Object::Object(Value&& pt) {
-	if (pt.getType() != Value::OBJECT) return;
+	if (pt.getType() != Value::OBJECT_TYPE) return;
 	*this = std::move(*pt.object_ptr);
 }
 
 
 Object& Object::operator=(const Value& pt) {
-	if (pt.getType() != Value::OBJECT || this == pt.object_ptr) return *this;
+	if (pt.getType() != Value::OBJECT_TYPE || this == pt.object_ptr) return *this;
 	return *this = pt.getObject();
 }
 
 Object& Object::operator=(Value&& pt) {
-	if (pt.getType() != Value::OBJECT || this == pt.object_ptr) return *this;
+	if (pt.getType() != Value::OBJECT_TYPE || this == pt.object_ptr) return *this;
 	return *this = std::move(*pt.object_ptr);
 }
 
