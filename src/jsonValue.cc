@@ -206,21 +206,21 @@ Value& Value::operator=(Boolean&& pt) {
 
 
 
-Value::operator std::string() {
+Value::operator std::string() const {
 	if (this->type != Value::STRING_TYPE) return std::string();
 	return this->getString();
 }
 
-Value::operator double() {
+Value::operator double() const {
 	if (this->type != Value::NUMBER_TYPE) return double();
 	return this->getNumber();
 }
 
-Value::operator int() {
+Value::operator int() const {
 	return double(*this);
 }
 
-Value::operator bool() {
+Value::operator bool() const {
 	switch (this->type) {
 	case Value::NULL_TYPE: 
 		return false; 
@@ -484,6 +484,49 @@ bool Value::insert(const String& key, const Value& value) {
 	return true;
 }
 
+bool Value::push_back(const Value& pt) {
+	if (type != Value::ARRAY_TYPE) return false;
+	(*array_ptr).addValue(pt);
+	return true;
+}
+
+bool Value::pop_back() {
+	if (type != Value::ARRAY_TYPE || (*array_ptr).size() == 0) return false;
+	(*array_ptr).pop_back();
+	return true;
+}
+
+bool Value::insert(size_t pos, const Value& pt) {
+	if (type != Value::ARRAY_TYPE || (*array_ptr).size() < pos) return false;
+	(*array_ptr).insert((*array_ptr).begin() + pos, pt);
+	return true;
+}
+
+bool Value::erase(const String& key) {
+	if (type != Value::OBJECT_TYPE) return false;
+	return (*object_ptr).erase(key);
+}
+
+bool Value::erase(size_t pos) {
+	if (type != Value::ARRAY_TYPE || (*array_ptr).size() <= pos) return false;
+	(*array_ptr).erase((*array_ptr).begin() + pos);
+	return true;
+}
+
+// ------------------  friend functions ---------------------
+
+Value operator+(const Value& pt, int n) { return double(pt) + n; }
+Value operator+(int n, const Value& pt) { return pt + n; }
 
 
+Value operator+(const Value& pt, char c) { return std::string(pt) + c; }
+Value operator+(char c, const Value& pt) { return c + std::string(pt); }
+
+	
+Value operator+(const Value& pt, const char* c) { return std::string(pt) + c; }
+Value operator+(const char* c, const Value& pt) { return c + std::string(pt); }
+	
+Value operator+(const Value& pt, const std::string& s) { return std::string(pt) + s; }
+Value operator+(const std::string& s, const Value& pt) { return s + std::string(pt); }
+	
 } // namespace Json

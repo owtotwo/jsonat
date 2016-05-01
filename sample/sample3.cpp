@@ -8,7 +8,6 @@ using std::endl;
 
 void sample3() {
     using namespace jsonat;
-    // using jsonat::Json;
     
     Json g; // g = null;
     Json a = "string";
@@ -18,9 +17,12 @@ void sample3() {
     Json e = {{"hello", 123}, {"world", true}};
     Json f = {a, b, c, d, e, g};
     
-    // cout << e["world"] << endl;
-    for (int i = 0; i < f.size(); i++) cout << f[i] << endl;
+    cout << e["world"] << endl;
+    for (unsigned i = 0; i < f.size(); i++) cout << f[i] << endl;
     Json p = Json::make_object();
+    int n = e["hello"];
+    cout << n << endl;
+    cout << b + 12 << endl;
 }
 
 int main() {

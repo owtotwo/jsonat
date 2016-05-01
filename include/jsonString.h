@@ -7,7 +7,7 @@
 #define JSON_STRING_H
 
 #include <string>
-#include <iostream>
+#include <ostream>
 
 namespace jsonat {
 
@@ -25,6 +25,7 @@ public:
 	String(const Value& pt);
 	String(Value&& pt);
 	String(const std::string& s);
+	String(std::string&& s);
 
 	String& operator=(const String& pt) = default;
 	String& operator=(String&& pt) = default;

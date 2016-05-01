@@ -9,7 +9,7 @@
 #include <initializer_list>
 #include <string>
 
-#include "jsonNumber.h"
+// #include "jsonNumber.h"
 
 namespace jsonat {
 
@@ -18,6 +18,7 @@ class Object;
 class Array;
 class String;
 class Boolean;
+typedef double Number;
 
 
 class Value {
@@ -77,10 +78,10 @@ public:
 	Value& operator=(Number&& pt);
 	Value& operator=(Boolean&& pt);
 	
-	operator std::string();
-	operator double();
-	operator int();
-	operator bool();
+	operator std::string() const;
+	operator double() const;
+	operator int() const;
+	operator bool() const;
 	
 	
 	// ------------------- New part -------------------
@@ -89,7 +90,7 @@ public:
 	Value& operator[](const char* key);
 	
 	size_t size() const;
-
+#if 0
 	Value operator+(const Value& pt) const;
 	Value operator-(const Value& pt) const;
 	Value operator*(const Value& pt) const;
@@ -99,28 +100,41 @@ public:
 	Value& operator-=(const Value& pt);
 	Value& operator*=(const Value& pt);
 	Value& operator/=(const Value& pt);
-	
-	bool insert(const String& key, const Value& value);
-	
-#if 0
-	friend operator+(const Value& pt, int n);
-	friend operator+(int n, const Value& pt);
-	
-
-	Value operator+(char c) const;
-	Value operator+(const char* c) const;
-	Value operator+(const std::string& s) const;
-	
-
-	void push_back(const Value& pt);
-	void pop_back();
-	
-	void insert(size_t pos, const Value& pt);
-	void erase(const String& key);
-	void erase(size_t pos);
-	
-	
 #endif
+	bool insert(const String& key, const Value& value);
+	bool push_back(const Value& pt);
+	bool pop_back();
+	bool insert(size_t pos, const Value& pt);
+	
+	bool erase(const String& key);
+	bool erase(size_t pos);
+	
+	friend Value operator+(const Value& pt, int n);
+	friend Value operator+(int n, const Value& pt);
+	
+	friend Value operator+(const Value& pt, char c);
+	friend Value operator+(char c, const Value& pt);
+	
+	friend Value operator+(const Value& pt, const char* c);
+	friend Value operator+(const char* c, const Value& pt);
+		
+	friend Value operator+(const Value& pt, const std::string& s);
+	friend Value operator+(const std::string& s, const Value& pt);
+
+#if 0
+	friend Value operator-(const Value& pt, int n);
+	friend Value operator-(int n, const Value& pt);
+	
+	friend Value operator*(const Value& pt, int n);
+	friend Value operator*(int n, const Value& pt);
+	
+	friend Value operator/(const Value& pt, int n);
+	friend Value operator/(int n, const Value& pt);
+	
+	friend Value operator+(const Value& pt, double n);
+	friend Value operator+(double n, const Value& pt);
+#endif
+
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
 		int indent, const std::string& indent_string);

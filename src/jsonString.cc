@@ -6,13 +6,12 @@
 #include <utility>
 #include "jsonString.h"
 #include "jsonValue.h"
-#include <iostream>
+#include <ostream>
 
 namespace jsonat {
 	
 String::String() {}
 String::String(const String& str) : std::string(str) {}
-// String::String(String&& pt) : std::string((std::string&&)pt) {}
 
 String::String(const Value& pt) {
 	if (pt.getType() != Value::STRING_TYPE) return;
@@ -24,7 +23,7 @@ String::String(Value&& pt) {
 }
 
 String::String(const std::string& s) : std::string(s) {}
-
+String::String(std::string&& s) : std::string(std::move(s)) {}
 
 String& String::operator=(const Value& pt) {
 	if (pt.getType() != Value::STRING_TYPE || this == pt.string_ptr) return *this;
