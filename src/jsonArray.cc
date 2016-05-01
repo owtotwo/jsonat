@@ -4,6 +4,8 @@
 
 #include <utility> // for move()
 #include <ostream>
+#include <algorithm> // for for_each()
+#include <initializer_list> // for initializer_list<>()
 
 #include "jsonArray.h"
 #include "jsonValue.h"
@@ -22,6 +24,11 @@ Array::Array(const Value& pt) : Array::SuperClass() {
 Array::Array(Value&& pt) {
 	if (pt.getType() != Value::ARRAY_TYPE) return;
 	*this = std::move(*pt.array_ptr);
+}
+
+Array::Array(std::initializer_list<Value> il) {
+	auto add_val_into_arr = [this](const Value& x){ (*this).addValue(x); };
+	std::for_each(il.begin(), il.end(), add_val_into_arr);
 }
 
 Array& Array::operator=(const Value& pt) {

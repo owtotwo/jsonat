@@ -9,6 +9,9 @@
 #include <string>
 #include <cstdint>
 #include <utility>
+#include <initializer_list>
+#include <algorithm>
+#include <cassert>
 
 #include "jsonJson.h"
 
@@ -76,6 +79,16 @@ std::string Json::pretty(const Value& val,
 	return ss.str();
 }
 
+
+Json Json::make_object(std::initializer_list<Value> il) {
+	auto is_kv_pair = [](const Value& x) -> bool {
+		return (x.isArray() && (x.getArray().size() == 2) && x.getArray().front().isString());
+	};
+	assert(std::all_of(il.begin(), il.end(), is_kv_pair)); 
+	return Object(il); 
+}
+
+Json Json::make_array(std::initializer_list<Value> il) { return Array(il); }
 
 
 

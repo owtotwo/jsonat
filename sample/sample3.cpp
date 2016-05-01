@@ -20,6 +20,7 @@ void sample3() {
     
     // cout << e["world"] << endl;
     for (int i = 0; i < f.size(); i++) cout << f[i] << endl;
+    Json p = Json::make_object();
 }
 
 int main() {

@@ -99,6 +99,9 @@ public:
 	Value& operator-=(const Value& pt);
 	Value& operator*=(const Value& pt);
 	Value& operator/=(const Value& pt);
+	
+	bool insert(const String& key, const Value& value);
+	
 #if 0
 	friend operator+(const Value& pt, int n);
 	friend operator+(int n, const Value& pt);
@@ -111,7 +114,7 @@ public:
 
 	void push_back(const Value& pt);
 	void pop_back();
-	void insert(const String& key, const Value& value);
+	
 	void insert(size_t pos, const Value& pt);
 	void erase(const String& key);
 	void erase(size_t pos);

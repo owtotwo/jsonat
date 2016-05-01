@@ -103,10 +103,7 @@ Value::Value(std::initializer_list<Value> il) {
 	};
 	
 	if (std::all_of(il.begin(), il.end(), is_kv_pair)) { // create Object
-		Object obj;
-		auto insert_kv_pair_into_obj = [&obj](const Value& x){ obj.addPair(x.getArray()[0], x.getArray()[1]); };
-		std::for_each(il.begin(), il.end(), insert_kv_pair_into_obj);
-		*this = obj;
+		*this = Object(il);
 	} else { // create Array
 		*this = Array(il);
 	}
@@ -480,6 +477,13 @@ Value Value::operator+(const Value& pt) const {
 	default: throw std::domain_error("type matching error");
 	}
 }
+
+bool Value::insert(const String& key, const Value& value) {
+	if (type != Value::OBJECT_TYPE) return false;
+	(*object_ptr).addPair(key, value);
+	return true;
+}
+
 
 
 } // namespace Json

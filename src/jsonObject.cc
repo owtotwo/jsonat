@@ -5,10 +5,13 @@
 #include "jsonObject.h"
 #include "jsonString.h"
 #include "jsonValue.h"
+#include "jsonArray.h"
 
 #include <ostream>
 #include <utility> // for move()
 #include <cassert>
+#include <algorithm> // for for_each()
+#include <initializer_list> // for initializer_list<>()
 
 namespace jsonat {
 
@@ -25,6 +28,10 @@ Object::Object(Value&& pt) {
 	*this = std::move(*pt.object_ptr);
 }
 
+Object::Object(std::initializer_list<Value> il) {
+	auto insert_kv_pair_into_obj = [this](const Value& x){ (*this).addPair(x.getArray()[0], x.getArray()[1]); };
+	std::for_each(il.begin(), il.end(), insert_kv_pair_into_obj);
+}
 
 Object& Object::operator=(const Value& pt) {
 	if (pt.getType() != Value::OBJECT_TYPE || this == pt.object_ptr) return *this;

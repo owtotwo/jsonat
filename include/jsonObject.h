@@ -20,6 +20,7 @@
 #endif
 
 #include <iostream>
+#include <initializer_list>
 
 
 namespace jsonat {
@@ -46,6 +47,7 @@ public:
 	Object(Object&& pt) = default;
 	Object(const Value& pt);
 	Object(Value&& pt); 
+	Object(std::initializer_list<Value> il);
 	
 	Object& operator=(const Object& pt) = default;
 	Object& operator=(Object&& pt) = default;

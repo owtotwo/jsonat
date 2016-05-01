@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <ostream>
+#include <initializer_list> // for initializer_list<>()
 
 namespace jsonat {
 
@@ -31,6 +32,7 @@ public:
 	Array(Array&& pt) = default;
 	Array(const Value& pt);
 	Array(Value&& pt);
+	Array(std::initializer_list<Value> il);
 	
 	Array& operator=(const Array& pt) = default;
 	Array& operator=(Array&& pt) = default;

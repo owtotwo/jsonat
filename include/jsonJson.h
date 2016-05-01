@@ -46,6 +46,9 @@ public:
 	// Serialize and return formatted C++ string
 	static std::string pretty(const Value& val, const std::string& indent_string = "    ");
 		
+	static Json make_object(std::initializer_list<Value> il = {});
+	static Json make_array(std::initializer_list<Value> il = {});
+		
 private:
 	/* nothing */
 };	
