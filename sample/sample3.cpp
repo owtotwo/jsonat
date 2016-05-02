@@ -23,6 +23,9 @@ void sample3() {
     int n = e["hello"];
     cout << n << endl;
     cout << b + 12 << endl;
+    cout << 12 + b + 14.6 << endl;
+    cout << (b + b + b) << " = " << (3 * b) << endl;
+    
 }
 
 int main() {

@@ -469,15 +469,6 @@ size_t Value::size() const {
 	}
 }
 
-
-Value Value::operator+(const Value& pt) const {
-	switch (type) {
-	case Value::NUMBER_TYPE: return this->getNumber() + pt.getNumber();
-	case Value::STRING_TYPE: return this->getString() + pt.getString();
-	default: throw std::domain_error("type matching error");
-	}
-}
-
 bool Value::insert(const String& key, const Value& value) {
 	if (type != Value::OBJECT_TYPE) return false;
 	(*object_ptr).addPair(key, value);
@@ -513,15 +504,80 @@ bool Value::erase(size_t pos) {
 	return true;
 }
 
+Value operator+(const Value& a, const Value& b) {
+	if (a.getType() != b.getType()) throw std::domain_error("Two arguments should be the elements of same type");
+	switch (a.getType()) {
+	case Value::NUMBER_TYPE: return a.getNumber() + b.getNumber(); break;
+	case Value::STRING_TYPE: return a.getString() + b.getString(); break;
+	default: throw std::domain_error("type should be NUMBER_TYPE or STRING_TYPE");
+	}
+}
+
+Value operator-(const Value& a, const Value& b) {
+	if (a.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of left argument should be value::NUMBER_TYPE");
+	if (b.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of right argument should be value::NUMBER_TYPE");
+	return a.getNumber() - b.getNumber();
+}
+
+Value operator*(const Value& a, const Value& b) {
+	if (a.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of left argument should be value::NUMBER_TYPE");
+	if (b.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of right argument should be value::NUMBER_TYPE");
+	return a.getNumber() * b.getNumber();
+}
+
+Value operator/(const Value& a, const Value& b) {
+	if (a.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of left argument should be value::NUMBER_TYPE");
+	if (b.getType() != Value::NUMBER_TYPE) 
+		throw std::domain_error("type of right argument should be value::NUMBER_TYPE");
+	return a.getNumber() / b.getNumber();
+}
+
+
+Value& Value::operator+=(const Value& pt) { return *this = *this + pt; }
+
+Value& Value::operator-=(const Value& pt) { return *this = *this - pt; }
+
+Value& Value::operator*=(const Value& pt) { return *this = *this * pt; }
+
+Value& Value::operator/=(const Value& pt) { return *this = *this / pt; }
+
+
+
 // ------------------  friend functions ---------------------
 
 Value operator+(const Value& pt, int n) { return double(pt) + n; }
-Value operator+(int n, const Value& pt) { return pt + n; }
+Value operator+(int n, const Value& pt) { return n + double(pt); }
+
+Value operator-(const Value& pt, int n) { return double(pt) - n; }
+Value operator-(int n, const Value& pt) { return n - double(pt); }
+
+Value operator*(const Value& pt, int n) { return double(pt) * n; }
+Value operator*(int n, const Value& pt) { return n * double(pt); }
+
+Value operator/(const Value& pt, int n) { return double(pt) / n; }
+Value operator/(int n, const Value& pt) { return n / double(pt); }
+
+
+Value operator+(const Value& pt, double n) { return double(pt) + n; }
+Value operator+(double n, const Value& pt) { return n + double(pt); }
+
+Value operator-(const Value& pt, double n) { return double(pt) - n; }
+Value operator-(double n, const Value& pt) { return n - double(pt); }
+
+Value operator*(const Value& pt, double n) { return double(pt) * n; }
+Value operator*(double n, const Value& pt) { return n * double(pt); }
+
+Value operator/(const Value& pt, double n) { return double(pt) / n; }
+Value operator/(double n, const Value& pt) { return n / double(pt); }
 
 
 Value operator+(const Value& pt, char c) { return std::string(pt) + c; }
 Value operator+(char c, const Value& pt) { return c + std::string(pt); }
-
 	
 Value operator+(const Value& pt, const char* c) { return std::string(pt) + c; }
 Value operator+(const char* c, const Value& pt) { return c + std::string(pt); }

@@ -90,17 +90,17 @@ public:
 	Value& operator[](const char* key);
 	
 	size_t size() const;
-#if 0
-	Value operator+(const Value& pt) const;
-	Value operator-(const Value& pt) const;
-	Value operator*(const Value& pt) const;
-	Value operator/(const Value& pt) const;
+
+	friend Value operator+(const Value& a, const Value& b);
+	friend Value operator-(const Value& a, const Value& b);
+	friend Value operator*(const Value& a, const Value& b);
+	friend Value operator/(const Value& a, const Value& b);
 	
 	Value& operator+=(const Value& pt);
 	Value& operator-=(const Value& pt);
 	Value& operator*=(const Value& pt);
 	Value& operator/=(const Value& pt);
-#endif
+
 	bool insert(const String& key, const Value& value);
 	bool push_back(const Value& pt);
 	bool pop_back();
@@ -112,16 +112,6 @@ public:
 	friend Value operator+(const Value& pt, int n);
 	friend Value operator+(int n, const Value& pt);
 	
-	friend Value operator+(const Value& pt, char c);
-	friend Value operator+(char c, const Value& pt);
-	
-	friend Value operator+(const Value& pt, const char* c);
-	friend Value operator+(const char* c, const Value& pt);
-		
-	friend Value operator+(const Value& pt, const std::string& s);
-	friend Value operator+(const std::string& s, const Value& pt);
-
-#if 0
 	friend Value operator-(const Value& pt, int n);
 	friend Value operator-(int n, const Value& pt);
 	
@@ -131,9 +121,28 @@ public:
 	friend Value operator/(const Value& pt, int n);
 	friend Value operator/(int n, const Value& pt);
 	
+	
 	friend Value operator+(const Value& pt, double n);
 	friend Value operator+(double n, const Value& pt);
-#endif
+	
+	friend Value operator-(const Value& pt, double n);
+	friend Value operator-(double n, const Value& pt);
+	
+	friend Value operator*(const Value& pt, double n);
+	friend Value operator*(double n, const Value& pt);
+	
+	friend Value operator/(const Value& pt, double n);
+	friend Value operator/(double n, const Value& pt);
+	
+	
+	friend Value operator+(const Value& pt, char c);
+	friend Value operator+(char c, const Value& pt);
+	
+	friend Value operator+(const Value& pt, const char* c);
+	friend Value operator+(const char* c, const Value& pt);
+		
+	friend Value operator+(const Value& pt, const std::string& s);
+	friend Value operator+(const std::string& s, const Value& pt);
 
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
