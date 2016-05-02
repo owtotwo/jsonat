@@ -1,21 +1,44 @@
 # Jsonat - A JSON Library in C++ #
 *Copyright (c) 2016 sysu_AT &lt;<owtotwo@163.com>&gt;*
 
-Jsonat is a C++ library used to read and write JSON.
+
+## Introduction ##
+* Jsonat is a C++ library used to read and write JSON.
+
+
+## Sample ##
+* TODO()
 
 
 ## Features ##
-* TODO();
+* Concise implementation
+* JavaScript object-like 
+* Simple API
+* More test relatively
 
 
 ## Requirements ##
-+ Windows, Linux, Mac OS X
++ Platforms
+ - Windows
+ - Linux
+ - Mac OS X
+ 
 + A **C++11**-Standard-Compliant Compiler 
  - [GCC 4.8.1 and later](https://gcc.gnu.org/gcc-4.8/cxx0x_status.html)
  - [Clang 3.3 and later](http://clang.llvm.org/cxx_status.html)
-+ Additional Compile Flag
+ 
++ Additional Compile Flag  
  - -std=c++11
-+ TODO()
+ 
+
+
+## Build ##
+* `$make`  
+	TODO()
+* `$make test`  
+	TODO()
+* `$make sample`  
+	TODO()
 
 
 ## Related Projects ##
@@ -23,4 +46,4 @@ Jsonat is a C++ library used to read and write JSON.
 
 
 ## License ##
-* [GNU LESSER GENERAL PUBLIC LICENSE ( LGPL )](LICENSE) (<http://www.gnu.org/licenses/lgpl-3.0.html>)
+* [GNU LESSER GENERAL PUBLIC LICENSE ( LGPL )](LICENSE)
