@@ -7,7 +7,6 @@ compiler:
   - clang
   - gcc
 before_install:
-  - 
   - if [ "$CXX" = "g++" ] then
 		if [ "$TRAVIS_OS_NAME" == "osx" ] then 
 			brew update; 
