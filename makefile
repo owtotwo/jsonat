@@ -31,6 +31,10 @@ OBJ_FILE = jsonJson.o  jsonArray.o  jsonString.o  \
 EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
+
+ifeq ($(TRAVIS_OS_NAME), osx)
+	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
+else
 ifeq ($(CXX), clang++)
 	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
 else
@@ -39,6 +43,7 @@ ifeq ($(findstring g++, $(CXX)), g++)
 else
 all:
 	@echo "Error: The compiler should be g++ or clang++."
+endif
 endif
 endif
 
