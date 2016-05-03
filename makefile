@@ -12,8 +12,9 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
-ifndef CXX
-	CXX = clang++
+# default compiler - clang++
+ifndef CXX 
+	CXX = clang++ 
 endif
 
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
@@ -32,6 +33,9 @@ EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
 
+SAMPLE_N = sample3
+
+# choose the libgtest static library
 ifeq ($(TRAVIS_OS_NAME), osx)
 	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
 else
@@ -113,8 +117,8 @@ test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
 # =============================================================
 # Sample file
 
-sample :  sample3.o  $(LIB_DIR)/libjsonat.a  
-	$(CXX) $(CPP_FLAG)  sample3.o  $(LIB_DIR)/libjsonat.a  -o  sample3
+sample :  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  
+	$(CXX) $(CPP_FLAG)  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  -o  $(SAMPLE_N)
 
 sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
 	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
@@ -136,8 +140,8 @@ clean-test :
 		test_roundtrip.o  test/roundtrip_data_tmp1.json  test/roundtrip_data_tmp2.json
 
 clean-sample :
-	rm -f  sample1.o  sample1  sample1.exe
+	rm -f  sample1.o  $(SAMPLE_N)  $(SAMPLE_N).exe
 
 
 clean-all :
-	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)  $(LIB_DIR)/libjsonat.a
+	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)  $(LIB_DIR)/libjsonat.a  $(SAMPLE_N)

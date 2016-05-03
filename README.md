@@ -8,7 +8,7 @@
 
 
 ## Sample ##
-* TODO()
+* Please see the [sample.cpp](sample/sample.cpp) for detials.
 
 
 ## Features ##
@@ -20,8 +20,8 @@
 
 ## Requirements ##
 + Platforms
- - Windows
- - Linux
+ - Windows (x64)
+ - Linux (ubuntu12.04)
  - Mac OS X
  
 + A **C++11**-Standard-Compliant Compiler 
@@ -35,12 +35,8 @@
 
 ## How To Use ##
 * `$make`  
-	TODO()  
-	<kbd>Ctrl + v</kbd>
 * `$make test`  
-	TODO()
 * `$make sample`  
-	TODO()
 
 
 ## Related Projects ##

@@ -1,18 +1,27 @@
 ---
 language: cpp
+
+# Cause travis-ci does not support the Windows, as well as I develop this
+# project in windows, it will only test on Linux(ubuntu 12.04) and Mac OS X.
 os:
   - linux
   - osx
+  
+# Do not test the support of Visual C++ for the time being.
 compiler: 
   - clang
   - gcc
+
+# Because the gcc in travis-ci operating system is only in version 4.6.3
+# and does not support the features of c++11. So every time launch this
+# script, it will download and install the gcc-4.8 to compile when testing
+# the support of gcc compiler in linux.
 before_install:
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q; fi
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install g++-4.8 -y; fi
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then export CXX="g++-4.8"; fi
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then g++-4.8 -v; fi
-  - g++ -v;
 
-# Change this to your needs
+# maybe 'make && make test && make sample && make clean-all'
 script:  make && make clean
