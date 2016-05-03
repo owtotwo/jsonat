@@ -32,7 +32,7 @@
  
 
 
-## Build ##
+## How To Use ##
 * `$make`  
 	TODO()  
 	<kbd>Ctrl + v</kbd>
