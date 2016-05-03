@@ -34,7 +34,7 @@ TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
 ifeq ($(CXX), clang++)
 	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
 else
-ifeq ($(findstring $(CXX), g++), g++)
+ifeq ($(findstring g++, $(CXX)), g++)
 	TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
 else
 all:
