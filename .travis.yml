@@ -7,18 +7,13 @@ compiler:
   - clang
   - gcc
 before_install:
-  - if [ "$CXX" = "g++" ] then
-		if [ "$TRAVIS_OS_NAME" == "osx" ] then 
-			brew update; 
-			brew install g++-4.8; 
-		elif [ "$TRAVIS_OS_NAME" == "linux" ] then
-			sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
-			sudo apt-get update -q;
-			sudo apt-get install g++-4.8 -y;
-		fi
-		export CXX="g++-4.8";
-		g++-4.8 -v;
-	fi
+  - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "osx" ]; then brew update; fi
+  - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "osx" ]; then brew install g++-4.8; fi
+  - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y; fi
+  - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get update -q; fi
+  - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then sudo apt-get install g++-4.8 -y; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
+  - if [ "$CXX" = "g++" ]; then g++-4.8 -v; fi
 #  - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.8 -y; fi
 #  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
   
