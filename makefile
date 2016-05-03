@@ -140,4 +140,4 @@ clean-sample :
 
 
 clean-all :
-	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)
+	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)  $(LIB_DIR)/libjsonat.a
