@@ -1,6 +1,6 @@
 # Jsonat - A JSON Library in C++ #
 *Copyright (c) 2016 sysu_AT &lt;<owtotwo@163.com>&gt;*
-
+[![Build Status](https://travis-ci.org/owtotwo/jsonat.svg?branch=master)](https://travis-ci.org/owtotwo/jsonat)
 
 ## Introduction ##
 * Jsonat is a C++ library used to read and write JSON.
