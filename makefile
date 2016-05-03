@@ -12,7 +12,7 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
-COMPILER = g++
+CXX = clang++
 
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc  \
@@ -29,19 +29,27 @@ OBJ_FILE = jsonJson.o  jsonArray.o  jsonString.o  \
 EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
-TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
-
+ifeq ($(CXX), g++)
+	TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
+else 
+ifeq ($(CXX), clang++)
+	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
+else
+all:
+	@echo "Error: The compiler should be g++ or clang++."
+endif
+endif
 
 
 # =======================================================
 # Execute file
 
 $(EXEC_FILE) : main.o  $(LIB_DIR)/libjsonat.a
-	$(COMPILER) $(CPP_FLAG) main.o  $(LIB_DIR)/libjsonat.a -o $(EXEC_FILE)
+	$(CXX) $(CPP_FLAG) main.o  $(LIB_DIR)/libjsonat.a -o $(EXEC_FILE)
 
 
 main.o : $(SRC_DIR)/main.cpp  $(INC_DIR)/Json.h
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/main.cpp
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/main.cpp
 
 $(INC_DIR)/Json.h : $(HEAD_FILE)
 	touch $(INC_DIR)/Json.h
@@ -50,28 +58,28 @@ $(LIB_DIR)/libjsonat.a : $(OBJ_FILE)
 	ar -rv $(LIB_DIR)/libjsonat.a  $(OBJ_FILE) 
 
 jsonJson.o : $(SRC_DIR)/jsonJson.cc  $(HEAD_FILE)
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonJson.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonJson.cc
 
 jsonArray.o : $(SRC_DIR)/jsonArray.cc  $(INC_DIR)/jsonArray.h  \
 	$(INC_DIR)/jsonValue.h
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonArray.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonArray.cc
 
 jsonObject.o : $(SRC_DIR)/jsonObject.cc  $(INC_DIR)/jsonObject.h  \
 	$(INC_DIR)/jsonValue.h  $(INC_DIR)/jsonString.h
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonObject.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonObject.cc
 
 jsonString.o : $(SRC_DIR)/jsonString.cc  $(INC_DIR)/jsonString.h  \
 	$(INC_DIR)/jsonValue.h
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonString.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonString.cc
 
 jsonValue.o : $(SRC_DIR)/jsonValue.cc  $(INC_DIR)/jsonValue.h  \
 	$(INC_DIR)/jsonObject.h  $(INC_DIR)/jsonBoolean.h  \
 	$(INC_DIR)/jsonNumber.h  $(INC_DIR)/jsonString.h  \
 	$(INC_DIR)/jsonArray.h  
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonValue.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonValue.cc
 
 jsonBoolean.o : $(SRC_DIR)/jsonBoolean.cc  $(INC_DIR)/jsonBoolean.h
-	$(COMPILER) $(CPP_FLAG) -c $(SRC_DIR)/jsonBoolean.cc
+	$(CXX) $(CPP_FLAG) -c $(SRC_DIR)/jsonBoolean.cc
 
 
 
@@ -80,35 +88,35 @@ jsonBoolean.o : $(SRC_DIR)/jsonBoolean.cc  $(INC_DIR)/jsonBoolean.h
 	
 test : test_main.o  test_Boolean.o  jsonBoolean.o  \
 	test_roundtrip.o  $(LIB_DIR)\libjsonat.a  $(TEST_LIB_FILE)
-	$(COMPILER) $(CPP_FLAG) $(TEST_FLAG)  test_main.o  test_Boolean.o  \
+	$(CXX) $(CPP_FLAG) $(TEST_FLAG)  test_main.o  test_Boolean.o  \
 		jsonBoolean.o  test_roundtrip.o  $(LIB_DIR)\libjsonat.a  \
 		$(TEST_LIB_FILE)  -o  test-all
 
 test_main.o : $(TEST_DIR)/test_main.cpp  $(TEST_HEAD_FILE)
-	$(COMPILER) $(CPP_FLAG) -c  $(TEST_DIR)/test_main.cpp
+	$(CXX) $(CPP_FLAG) -c  $(TEST_DIR)/test_main.cpp
 
 test_Boolean.o : $(TEST_DIR)/test_Boolean.cpp  $(INC_DIR)/jsonBoolean.h  \
 	$(TEST_HEAD_FILE)
-	$(COMPILER) $(CPP_FLAG) -c $(TEST_DIR)/test_Boolean.cpp
+	$(CXX) $(CPP_FLAG) -c $(TEST_DIR)/test_Boolean.cpp
 	
 test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
 	$(TEST_HEAD_FILE)
-	$(COMPILER) $(CPP_FLAG) -c $(TEST_DIR)/test_roundtrip.cpp
+	$(CXX) $(CPP_FLAG) -c $(TEST_DIR)/test_roundtrip.cpp
 
 # =============================================================
 # Sample file
 
 sample :  sample3.o  $(LIB_DIR)/libjsonat.a  
-	$(COMPILER) $(CPP_FLAG)  sample3.o  $(LIB_DIR)/libjsonat.a  -o  sample3
+	$(CXX) $(CPP_FLAG)  sample3.o  $(LIB_DIR)/libjsonat.a  -o  sample3
 
 sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
-	$(COMPILER) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
+	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
 
 sample2.o : $(SAMPLE_DIR)/sample2.cpp  $(INC_DIR)/Json.h
-	$(COMPILER) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample2.cpp
+	$(CXX) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample2.cpp
 	
 sample3.o : $(SAMPLE_DIR)/sample3.cpp  $(INC_DIR)/Json.h
-	$(COMPILER) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample3.cpp
+	$(CXX) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample3.cpp
 
 # =============================================================
 # clean
