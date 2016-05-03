@@ -12,6 +12,8 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
+CXX = g++
+
 ifndef CXX
 	CXX = clang++
 endif
@@ -31,11 +33,11 @@ OBJ_FILE = jsonJson.o  jsonArray.o  jsonString.o  \
 EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
-ifeq ($(CXX), g++)
-	TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
-else 
 ifeq ($(CXX), clang++)
 	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
+else
+ifeq ($(findstring $(CXX), g++), g++)
+	TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
 else
 all:
 	@echo "Error: The compiler should be g++ or clang++."
