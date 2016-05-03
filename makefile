@@ -12,8 +12,6 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
-CXX = g++
-
 ifndef CXX
 	CXX = clang++
 endif
