@@ -34,7 +34,8 @@
 
 ## Build ##
 * `$make`  
-	TODO()
+	TODO()  
+	<kbd>Ctrl + v</kbd>
 * `$make test`  
 	TODO()
 * `$make sample`  
