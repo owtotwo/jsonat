@@ -7,15 +7,17 @@ compiler:
   - clang
   - gcc
 before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - 
   - if [ "$CXX" = "g++" ] then
 		if [ "$TRAVIS_OS_NAME" == "osx" ] then 
 			brew update; 
 			brew install g++-4.8; 
 		elif [ "$TRAVIS_OS_NAME" == "linux" ] then
-			if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.8 -y; fi
-			if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
+			sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
+			sudo apt-get update -q;
+			sudo apt-get install g++-4.8 -y;
 		fi
+		export CXX="g++-4.8";
 		g++-4.8 -v;
 	fi
 #  - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.8 -y; fi
