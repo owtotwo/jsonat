@@ -12,7 +12,9 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
-CXX = clang++
+ifndef CXX
+	CXX = clang++
+endif
 
 CC_FILE = $(SRC_DIR)/jsonArray.cc  $(SRC_DIR)/jsonString.cc  \
 	$(SRC_DIR)/jsonValue.cc  $(SRC_DIR)/jsonObject.cc  \
@@ -133,4 +135,4 @@ clean-sample :
 
 
 clean-all :
-	rm  -f  *.o  *.exe
+	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)
