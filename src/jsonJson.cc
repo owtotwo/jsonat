@@ -3,15 +3,15 @@
 // All rights reserved.
 
 #include <iostream>
-#include <cctype>
-#include <climits>
+#include <cctype> // for isdigit()
 #include <sstream>
 #include <string>
-#include <cstdint>
-#include <utility>
+#include <cstdint> // for uint16_t
+#include <utility> // for move()
 #include <initializer_list>
-#include <algorithm>
+#include <algorithm> // for all_of()
 #include <cassert>
+#include <functional> // for function<>()
 
 #include "jsonJson.h"
 
@@ -90,7 +90,8 @@ Json Json::make_object(std::initializer_list<Value> il) {
 
 Json Json::make_array(std::initializer_list<Value> il) { return Array(il); }
 
-
+std::function<decltype(Json::make_object)> makeObject = Json::make_object;
+std::function<decltype(Json::make_array)> makeArray = Json::make_array;
 
 
 // ============================= Detail ============================
@@ -157,7 +158,14 @@ static bool isHexDigit(char hex_digit) {
 		|| (hex_digit >= 'A' && hex_digit <= 'F');
 }
 
-// convert UCS-2 big-endian to UTF-8
+
+/**
+ * Convert UCS-2 big-endian to UTF-8.
+ * @param s: a string in Unicode UCS-2 big-endian code,
+ * @ret : a string in Unicode UTF-8 code,
+ * i.e. : s = {0x4E, 0x25}; // UCS-2 big-endian
+ *   ucs2be_to_utf8(s) return a string {0xE4, 0xB8, 0xA5}. // UTF-8
+ */
 static std::string ucs2be_to_utf8(const std::string& s) {
 
 	std::string ret;
@@ -187,6 +195,11 @@ static std::string ucs2be_to_utf8(const std::string& s) {
 	return ret;
 }
 
+
+/**
+ * Convert four char to a UTF-8 string.
+ * i.e. : unicodeToAsciis("4E25") return a string {0xE4, 0xB8, 0xA5}.
+ */
 static std::string unicodeToAsciis(const char hex_digits[4]) {
 	istringstream ss(hex_digits);
 	uint16_t n = 0;
@@ -332,8 +345,7 @@ static Value parse_Value(istream& is) {
 
 
 
-// do not support the unicode escape ('\u0123') completely for the time being
-// only allow the unicode char in range [0, 128), (i.e. '\0031')
+// Support the unicode escape ('\u0123') completely now.
 static String parse_String(istream& is) {
 	debug_printf("parse_String()");
 	String str;
@@ -396,13 +408,6 @@ static Number parse_Number(istream& is) {
 
 	return num;
 }
-
-
-
-// --------------------------- toString ----------------------------
-
-
-
 
 
 } // namespace jsonat

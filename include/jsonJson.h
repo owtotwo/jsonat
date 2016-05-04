@@ -6,6 +6,7 @@
 #define JSON_JSON_H
 
 #include <iostream>
+#include <functional> // for function<>()
 #include "jsonValue.h"
 
 namespace jsonat {
@@ -54,6 +55,9 @@ private:
 };	
 	
 using JSON = Json;
+
+extern std::function<decltype(Json::make_object)> makeObject; // JavaScript-like API
+extern std::function<decltype(Json::make_array)> makeArray; // JavaScript-like API
 	
 } // namespace jsonat
 
