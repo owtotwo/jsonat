@@ -12,6 +12,7 @@ SAMPLE_DIR = $(ROOT_DIR)/sample
 CPP_FLAG = -std=c++11 -I$(ROOT_DIR) -I$(INC_DIR) -g -Wall
 TEST_FLAG = -pthread 
 
+
 # default compiler - clang++
 ifndef CXX 
 	CXX = clang++ 
@@ -33,7 +34,7 @@ EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
 
-SAMPLE_N = sample
+SAMPLE_N = sample4
 
 # choose the libgtest static library
 ifeq ($(TRAVIS_OS_NAME), osx)
@@ -51,6 +52,7 @@ endif
 endif
 endif
 
+TEST_LIB_FILE = $(LIB_DIR)/gtest/libgtest.a
 
 # =======================================================
 # Execute file
@@ -103,6 +105,9 @@ test : test_main.o  test_String.o  jsonString.o  test_Boolean.o  jsonBoolean.o  
 		test_Boolean.o jsonBoolean.o  test_roundtrip.o  $(LIB_DIR)/libjsonat.a  \
 		$(TEST_LIB_FILE)  -o  test-all
 
+$(TEST_LIB_FILE) : 
+	make CXX=$(CXX) -C $(LIB_DIR)/gtest
+
 test_main.o : $(TEST_DIR)/test_main.cpp  $(TEST_HEAD_FILE)
 	$(CXX) $(CPP_FLAG) -c  $(TEST_DIR)/test_main.cpp
 
@@ -124,18 +129,9 @@ test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
 sample :  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  
 	$(CXX) $(CPP_FLAG)  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  -o  $(SAMPLE_N)
 
-sample.o : $(SAMPLE_DIR)/sample.cpp  $(INC_DIR)/Json.h
-	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample.cpp
-
-sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
-	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp
-
-sample2.o : $(SAMPLE_DIR)/sample2.cpp  $(INC_DIR)/Json.h
-	$(CXX) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample2.cpp
+$(SAMPLE_N).o : $(SAMPLE_DIR)/$(SAMPLE_N).cpp  $(INC_DIR)/Json.h
+	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/$(SAMPLE_N).cpp
 	
-sample3.o : $(SAMPLE_DIR)/sample3.cpp  $(INC_DIR)/Json.h
-	$(CXX) $(CPP_FLAG) -c -O0  $(SAMPLE_DIR)/sample3.cpp
-
 # =============================================================
 # clean
 
@@ -151,4 +147,5 @@ clean-sample :
 
 
 clean-all :
-	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)  $(LIB_DIR)/libjsonat.a  $(SAMPLE_N)
+	rm  -f  *.o  *.exe  test-all  $(EXEC_FILE)  $(LIB_DIR)/libjsonat.a  $(SAMPLE_N) &&  \
+	make -C $(LIB_DIR)/gtest clean-all
