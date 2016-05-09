@@ -13,5 +13,11 @@
 #define JSON_H
 
 #include "jsonJson.h"
+#include "jsonValue.h"
+#include "jsonObject.h"
+#include "jsonArray.h"
+#include "jsonString.h"
+#include "jsonNumber.h"
+#include "jsonBoolean.h"
 
 #endif // JSON_H

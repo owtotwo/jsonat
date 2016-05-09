@@ -82,6 +82,9 @@ public:
 	operator double() const;
 	operator int() const;
 	operator bool() const;
+	operator long long int() const;
+	operator unsigned int() const;
+	operator unsigned long long() const;
 	
 	
 	// ------------------- New part -------------------
@@ -108,6 +111,10 @@ public:
 	
 	bool erase(const String& key);
 	bool erase(size_t pos);
+	
+	size_t push(const Value& pt);
+	size_t push(std::initializer_list<Value>);
+	bool pop();
 	
 	friend Value operator+(const Value& pt, int n);
 	friend Value operator+(int n, const Value& pt);
@@ -143,6 +150,11 @@ public:
 		
 	friend Value operator+(const Value& pt, const std::string& s);
 	friend Value operator+(const std::string& s, const Value& pt);
+	
+	friend bool operator==(const Value& a, const Value& b);
+	// friend bool operator==(const Value& a, int b);
+	// friend bool operator==(const Value& a, double b);
+	// friend bool operator==(const Value& a, std::string& )
 
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 

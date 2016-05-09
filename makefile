@@ -33,7 +33,7 @@ EXEC_FILE = jsonat
 
 TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
 
-SAMPLE_N = sample3
+SAMPLE_N = sample
 
 # choose the libgtest static library
 ifeq ($(TRAVIS_OS_NAME), osx)
@@ -119,6 +119,9 @@ test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
 
 sample :  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  
 	$(CXX) $(CPP_FLAG)  $(SAMPLE_N).o  $(LIB_DIR)/libjsonat.a  -o  $(SAMPLE_N)
+
+sample.o : $(SAMPLE_DIR)/sample.cpp  $(INC_DIR)/Json.h
+	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample.cpp
 
 sample1.o : $(SAMPLE_DIR)/sample1.cpp  $(INC_DIR)/Json.h
 	$(CXX) $(CPP_FLAG) -c  $(SAMPLE_DIR)/sample1.cpp

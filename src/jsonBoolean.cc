@@ -34,6 +34,8 @@ Boolean& Boolean::operator^=(Boolean pt) {
 	return *this;
 }
 
+// bool operator==(Boolean a, Boolean b) { return a.b_ == b.b_; }
+
 std::ostream& operator<<(std::ostream& os, Boolean pt) {
 	return os << (pt ? "true" : "false");
 }

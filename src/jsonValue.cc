@@ -14,7 +14,7 @@
 #include <cassert>
 #include <string>
 #include <initializer_list>
-#include <algorithm>
+#include <algorithm> // for all_of(), for_each()
 #include <stdexcept>
 
 namespace jsonat {
@@ -238,6 +238,18 @@ Value::operator bool() const {
 		assert("should not be here" == 0);
 	}
 	return false;
+}
+
+Value::operator long long int() const {
+	return double(*this);
+}
+
+Value::operator unsigned int() const {
+	return double(*this);
+}
+
+Value::operator unsigned long long() const {
+	return double(*this);
 }
 
 
@@ -504,6 +516,20 @@ bool Value::erase(size_t pos) {
 	return true;
 }
 
+size_t Value::push(const Value& pt) {
+	this->push_back(pt);
+	return this->size();
+}
+
+size_t Value::push(std::initializer_list<Value> il) {
+	std::for_each(il.begin(), il.end(), [this](const Value& pt){ this->push_back(pt); });
+	return this->size();
+}
+
+bool Value::pop() {
+	return this->pop_back();
+}
+
 Value operator+(const Value& a, const Value& b) {
 	if (a.getType() != b.getType()) throw std::domain_error("Two arguments should be the elements of same type");
 	switch (a.getType()) {
@@ -584,5 +610,23 @@ Value operator+(const char* c, const Value& pt) { return c + std::string(pt); }
 	
 Value operator+(const Value& pt, const std::string& s) { return std::string(pt) + s; }
 Value operator+(const std::string& s, const Value& pt) { return s + std::string(pt); }
+	
+
+bool operator==(const Value& a, const Value& b) {
+	
+	if(a.getType() != b.getType()) return false;
+	
+	switch (a.getType()) {
+	case Value::NULL_TYPE: return true;
+	case Value::OBJECT_TYPE: return a.getObject() == b.getObject();
+	case Value::STRING_TYPE: return a.getString() == b.getString();
+	case Value::NUMBER_TYPE: return a.getNumber() == b.getNumber();
+	case Value::ARRAY_TYPE: return a.getArray() == b.getArray();
+	case Value::BOOLEAN_TYPE: return bool(a) == bool(b);
+	default: assert("should not be here" == 0);
+	}
+	
+	return false;
+}
 	
 } // namespace Json

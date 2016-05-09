@@ -25,6 +25,7 @@ public:
 	Boolean& operator|=(Boolean pt);
 	Boolean& operator^=(Boolean pt);
 	
+	// friend bool operator==(Boolean a, Boolean b);
 	friend std::ostream& operator<<(std::ostream& os, Boolean pt);
 	friend void toString(std::ostream& os, const Boolean& pt);
 	
