@@ -36,22 +36,6 @@ TEST_HEAD_FILE = $(INC_DIR)/gtest/gtest.h
 
 SAMPLE_N = sample4
 
-# choose the libgtest static library
-ifeq ($(TRAVIS_OS_NAME), osx)
-	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
-else
-ifeq ($(CXX), clang++)
-	TEST_LIB_FILE = $(LIB_DIR)/libgtest_clang.a
-else
-ifeq ($(findstring g++, $(CXX)), g++)
-	TEST_LIB_FILE = $(LIB_DIR)/libgtest.a
-else
-all:
-	@echo "Error: The compiler should be g++ or clang++."
-endif
-endif
-endif
-
 TEST_LIB_FILE = $(LIB_DIR)/gtest/libgtest.a
 
 # =======================================================
