@@ -84,9 +84,12 @@ jsonBoolean.o : $(SRC_DIR)/jsonBoolean.cc  $(INC_DIR)/jsonBoolean.h
 # Test file
 	
 test : test_main.o  test_String.o  jsonString.o  test_Boolean.o  jsonBoolean.o  \
+	test_Array.o  jsonArray.o  jsonValue.o  \
 	test_roundtrip.o  $(LIB_DIR)/libjsonat.a  $(TEST_LIB_FILE)
 	$(CXX) $(CPP_FLAG) $(TEST_FLAG)  test_main.o  test_String.o  jsonString.o  \
-		test_Boolean.o jsonBoolean.o  test_roundtrip.o  $(LIB_DIR)/libjsonat.a  \
+		test_Boolean.o  jsonBoolean.o  \
+		test_Array.o  jsonArray.o  jsonValue.o  \
+		test_roundtrip.o  $(LIB_DIR)/libjsonat.a  \
 		$(TEST_LIB_FILE)  -o  test-all
 
 $(TEST_LIB_FILE) : 
@@ -102,6 +105,10 @@ test_Boolean.o : $(TEST_DIR)/test_Boolean.cpp  $(INC_DIR)/jsonBoolean.h  \
 test_String.o : $(TEST_DIR)/test_String.cpp  $(INC_DIR)/jsonString.h  \
 	$(TEST_HEAD_FILE)
 	$(CXX) $(CPP_FLAG) -c $(TEST_DIR)/test_String.cpp
+	
+test_Array.o : $(TEST_DIR)/test_Array.cpp  $(INC_DIR)/jsonArray.h  \
+	$(INC_DIR)/jsonValue.h  $(TEST_HEAD_FILE)
+	$(CXX) $(CPP_FLAG) -c $(TEST_DIR)/test_Array.cpp
 	
 test_roundtrip.o : $(TEST_DIR)/test_roundtrip.cpp  $(INC_DIR)/Json.h  \
 	$(TEST_HEAD_FILE)

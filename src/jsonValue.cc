@@ -93,6 +93,10 @@ Value::Value(int pt) : Value::Value(Number(pt)) {}
 
 Value::Value(bool x) : Value::Value(Boolean(x)) {}
 
+Value::Value(unsigned int pt) : Value::Value(Number(pt)) {}
+Value::Value(long long int pt) : Value::Value(Number(pt)) {}
+Value::Value(long long unsigned int pt) : Value::Value(Number(pt)) {}
+
 Value::Value(std::initializer_list<Value> il) {
 	if (il.size() == 0) return; // set type = NULL_TYPE
 

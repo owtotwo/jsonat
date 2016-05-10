@@ -39,6 +39,9 @@ public:
 	Value(const std::string& pt);
 	Value(int n);
 	Value(bool x);
+	Value(unsigned int);
+	Value(long long int);
+	Value(long long unsigned int);
 	
 	Value(std::initializer_list<Value> il);
 	Value(String&& pt);
