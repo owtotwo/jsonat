@@ -3,7 +3,7 @@
 // All rights reserved.
 
 #include <utility> // for move()
-#include <ostream>
+#include <iostream>
 #include <algorithm> // for for_each()
 #include <initializer_list> // for initializer_list<>()
 
