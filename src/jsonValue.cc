@@ -220,10 +220,6 @@ Value::operator double() const {
 	return this->getNumber();
 }
 
-Value::operator int() const {
-	return double(*this);
-}
-
 Value::operator bool() const {
 	switch (this->type) {
 	case Value::NULL_TYPE: 
@@ -243,20 +239,6 @@ Value::operator bool() const {
 	}
 	return false;
 }
-
-Value::operator long long int() const {
-	return double(*this);
-}
-
-Value::operator unsigned int() const {
-	return double(*this);
-}
-
-Value::operator unsigned long long() const {
-	return double(*this);
-}
-
-
 
 Value::~Value() {
 	switch (type) {
@@ -609,32 +591,6 @@ Value Value::operator--(int) {
 
 
 // ------------------  friend functions ---------------------
-#ifndef USE_TEMPLATE_MATCH_OPERATIONS
-Value operator+(const Value& pt, int n) { return double(pt) + n; }
-Value operator+(int n, const Value& pt) { return n + double(pt); }
-
-Value operator-(const Value& pt, int n) { return double(pt) - n; }
-Value operator-(int n, const Value& pt) { return n - double(pt); }
-
-Value operator*(const Value& pt, int n) { return double(pt) * n; }
-Value operator*(int n, const Value& pt) { return n * double(pt); }
-
-Value operator/(const Value& pt, int n) { return double(pt) / n; }
-Value operator/(int n, const Value& pt) { return n / double(pt); }
-
-
-Value operator+(const Value& pt, double n) { return double(pt) + n; }
-Value operator+(double n, const Value& pt) { return n + double(pt); }
-
-Value operator-(const Value& pt, double n) { return double(pt) - n; }
-Value operator-(double n, const Value& pt) { return n - double(pt); }
-
-Value operator*(const Value& pt, double n) { return double(pt) * n; }
-Value operator*(double n, const Value& pt) { return n * double(pt); }
-
-Value operator/(const Value& pt, double n) { return double(pt) / n; }
-Value operator/(double n, const Value& pt) { return n / double(pt); }
-#endif
 
 Value operator+(const Value& pt, char c) { return std::string(pt) + c; }
 Value operator+(char c, const Value& pt) { return c + std::string(pt); }

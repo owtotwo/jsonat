@@ -47,4 +47,7 @@ TEST(jsonArray, OtherOperations) {
 	EXPECT_EQ(1, arr[0]);
 	EXPECT_EQ(short(2), arr[1]);
 	EXPECT_EQ(arr[2], (unsigned long long)(arr[arr[2] - 2] + 1));
+	
+	arr.addValue("hello worl");
+	EXPECT_EQ(arr.back() + 'd', "hello world");
 }

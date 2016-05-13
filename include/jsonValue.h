@@ -13,7 +13,16 @@
 
 namespace jsonat {
 
-#define USE_TEMPLATE_MATCH_OPERATIONS
+/*
+ * is_arithmetic means is_integral_types(int, bool, char, short int ...) or 
+ * is_floating_point_types(float, double, long double).
+ * http://www.cplusplus.com/reference/type_traits/is_arithmetic/
+ */
+#define TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
+	template < typename T, \
+	typename = typename std::enable_if<std::is_arithmetic< T >::value>::type >
+#define TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T) \
+	template < typename T, typename >
 
 // Forward declaration
 class Object;
@@ -84,13 +93,12 @@ public:
 	Value& operator=(Boolean&& pt);
 	
 	operator std::string() const;
-	operator double() const;
-	operator int() const;
 	operator bool() const;
-	operator long long int() const;
-	operator unsigned int() const;
-	operator unsigned long long() const;
+	operator double() const;
 	
+	/* type conversion template from Value(NUMBER_TYPE) to SOME_ARITHMETIC_TYPE */
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+	operator T() const;
 	
 	// ------------------- New part -------------------
 	Value& operator[](size_t pos);
@@ -127,33 +135,6 @@ public:
 	size_t push(std::initializer_list<Value>);
 	bool pop();
 	
-#ifndef USE_TEMPLATE_MATCH_OPERATIONS
-	friend Value operator+(const Value& pt, int n);
-	friend Value operator+(int n, const Value& pt);
-
-	friend Value operator-(const Value& pt, int n);
-	friend Value operator-(int n, const Value& pt);
-	
-	friend Value operator*(const Value& pt, int n);
-	friend Value operator*(int n, const Value& pt);
-	
-	friend Value operator/(const Value& pt, int n);
-	friend Value operator/(int n, const Value& pt);
-	
-
-	friend Value operator+(const Value& pt, double n);
-	friend Value operator+(double n, const Value& pt);
-
-	friend Value operator-(const Value& pt, double n);
-	friend Value operator-(double n, const Value& pt);
-	
-	friend Value operator*(const Value& pt, double n);
-	friend Value operator*(double n, const Value& pt);
-	
-	friend Value operator/(const Value& pt, double n);
-	friend Value operator/(double n, const Value& pt);
-#endif
-	
 	friend Value operator+(const Value& pt, char c);
 	friend Value operator+(char c, const Value& pt);
 	
@@ -164,7 +145,7 @@ public:
 	friend Value operator+(const std::string& s, const Value& pt);
 	
 	friend bool operator==(const Value& a, const Value& b);
-	
+	// TODO() : friend bool operator<(const Value& a, const Value& b);
 
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
@@ -185,55 +166,43 @@ private:
 };
 
 
-template < class T, 
-	class = typename std::enable_if<std::is_arithmetic<T>::value>::type >
-bool operator==(const Value& a, T b) {
-	return a == Value(b);
-}
-
-template < class T, 
-	class = typename std::enable_if<std::is_arithmetic<T>::value>::type >
-bool operator==(T a, const Value& b) {
-	return Value(a) == b;
-}
 
 
-#ifdef USE_TEMPLATE_MATCH_OPERATIONS
 
-	#define TEMPLATE_HEADER_FOR_ARITHMETIC(T) \
-	template < class T, \
-	class = typename std::enable_if<std::is_arithmetic< T >::value>::type >
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+bool operator==(const Value& a, T b) { return a == Value(b); }
 
-	/*template < class T, 
-		class = typename std::enable_if<std::is_arithmetic<T>::value>::type >*/
-		
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator+(const Value& pt, T num) { return pt + Value(num); }
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+bool operator==(T a, const Value& b) { return Value(a) == b; }
 
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator+(T num, const Value& pt) { return Value(num) + pt; }
-	
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator-(const Value& pt, T num) { return pt - Value(num); }
 
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator-(T num, const Value& pt) { return Value(num) - pt; }
-	
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator*(const Value& pt, T num) { return pt * Value(num); }
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator+(const Value& pt, T num) { return pt + Value(num); }
 
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator*(T num, const Value& pt) { return Value(num) * pt; }
-	
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator/(const Value& pt, T num) { return pt / Value(num); }
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator+(T num, const Value& pt) { return Value(num) + pt; }
 
-	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
-	Value operator/(T num, const Value& pt) { return Value(num) / pt; }
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator-(const Value& pt, T num) { return pt - Value(num); }
 
-	
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator-(T num, const Value& pt) { return Value(num) - pt; }
 
-#endif
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator*(const Value& pt, T num) { return pt * Value(num); }
+
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator*(T num, const Value& pt) { return Value(num) * pt; }
+
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator/(const Value& pt, T num) { return pt / Value(num); }
+
+TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+Value operator/(T num, const Value& pt) { return Value(num) / pt; }
+
+/* type conversion template from Value(NUMBER_TYPE) to SOME_ARITHMETIC_TYPE */
+TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
+Value::operator T() const { return double(*this); }
 
 
 } // namespace Json
