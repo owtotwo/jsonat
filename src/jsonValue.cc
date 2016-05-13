@@ -577,6 +577,36 @@ Value& Value::operator*=(const Value& pt) { return *this = *this * pt; }
 Value& Value::operator/=(const Value& pt) { return *this = *this / pt; }
 
 
+Value& Value::operator++() {
+	if (this->type != Value::NUMBER_TYPE) {
+		throw std::domain_error(
+			"type of argument which calls increment operator should be value::NUMBER_TYPE"
+		);
+	}
+	return *this += 1;
+}
+
+Value& Value::operator--() {
+	if (this->type != Value::NUMBER_TYPE) {
+		throw std::domain_error(
+			"type of argument which calls decrement operator should be value::NUMBER_TYPE"
+		);
+	}
+	return *this -= 1;
+}
+	
+
+Value Value::operator++(int) {
+	Value tmp = *this;
+	return ++tmp; 
+}
+
+Value Value::operator--(int) {
+	Value tmp = *this;
+	return --tmp; 
+}
+
+
 
 // ------------------  friend functions ---------------------
 

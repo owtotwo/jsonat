@@ -106,6 +106,12 @@ public:
 	Value& operator-=(const Value& pt);
 	Value& operator*=(const Value& pt);
 	Value& operator/=(const Value& pt);
+	
+	Value& operator++();
+	Value& operator--();
+	
+	Value operator++(int);
+	Value operator--(int);
 
 	bool insert(const String& key, const Value& value);
 	bool push_back(const Value& pt);
