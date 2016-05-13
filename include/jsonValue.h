@@ -5,13 +5,15 @@
 #ifndef JSON_VALUE_H
 #define JSON_VALUE_H
 
-#include <ostream>
+#include <iostream>
 #include <initializer_list>
 #include <string>
+#include <type_traits> // for enable_if, is_arithmetic
 
-// #include "jsonNumber.h"
 
 namespace jsonat {
+
+#define USE_TEMPLATE_MATCH_OPERATIONS
 
 // Forward declaration
 class Object;
@@ -125,9 +127,10 @@ public:
 	size_t push(std::initializer_list<Value>);
 	bool pop();
 	
+#ifndef USE_TEMPLATE_MATCH_OPERATIONS
 	friend Value operator+(const Value& pt, int n);
 	friend Value operator+(int n, const Value& pt);
-	
+
 	friend Value operator-(const Value& pt, int n);
 	friend Value operator-(int n, const Value& pt);
 	
@@ -137,10 +140,10 @@ public:
 	friend Value operator/(const Value& pt, int n);
 	friend Value operator/(int n, const Value& pt);
 	
-	
+
 	friend Value operator+(const Value& pt, double n);
 	friend Value operator+(double n, const Value& pt);
-	
+
 	friend Value operator-(const Value& pt, double n);
 	friend Value operator-(double n, const Value& pt);
 	
@@ -149,21 +152,19 @@ public:
 	
 	friend Value operator/(const Value& pt, double n);
 	friend Value operator/(double n, const Value& pt);
-	
+#endif
 	
 	friend Value operator+(const Value& pt, char c);
 	friend Value operator+(char c, const Value& pt);
 	
 	friend Value operator+(const Value& pt, const char* c);
 	friend Value operator+(const char* c, const Value& pt);
-		
+
 	friend Value operator+(const Value& pt, const std::string& s);
 	friend Value operator+(const std::string& s, const Value& pt);
 	
 	friend bool operator==(const Value& a, const Value& b);
-	// friend bool operator==(const Value& a, int b);
-	// friend bool operator==(const Value& a, double b);
-	// friend bool operator==(const Value& a, std::string& )
+	
 
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
@@ -182,6 +183,57 @@ private:
 	Array* array_ptr = nullptr;
 	Boolean* boolean_ptr = nullptr;
 };
+
+
+template < class T, 
+	class = typename std::enable_if<std::is_arithmetic<T>::value>::type >
+bool operator==(const Value& a, T b) {
+	return a == Value(b);
+}
+
+template < class T, 
+	class = typename std::enable_if<std::is_arithmetic<T>::value>::type >
+bool operator==(T a, const Value& b) {
+	return Value(a) == b;
+}
+
+
+#ifdef USE_TEMPLATE_MATCH_OPERATIONS
+
+	#define TEMPLATE_HEADER_FOR_ARITHMETIC(T) \
+	template < class T, \
+	class = typename std::enable_if<std::is_arithmetic< T >::value>::type >
+
+	/*template < class T, 
+		class = typename std::enable_if<std::is_arithmetic<T>::value>::type >*/
+		
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator+(const Value& pt, T num) { return pt + Value(num); }
+
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator+(T num, const Value& pt) { return Value(num) + pt; }
+	
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator-(const Value& pt, T num) { return pt - Value(num); }
+
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator-(T num, const Value& pt) { return Value(num) - pt; }
+	
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator*(const Value& pt, T num) { return pt * Value(num); }
+
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator*(T num, const Value& pt) { return Value(num) * pt; }
+	
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator/(const Value& pt, T num) { return pt / Value(num); }
+
+	TEMPLATE_HEADER_FOR_ARITHMETIC(T)
+	Value operator/(T num, const Value& pt) { return Value(num) / pt; }
+
+	
+
+#endif
 
 
 } // namespace Json

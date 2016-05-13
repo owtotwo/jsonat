@@ -43,4 +43,8 @@ TEST(jsonArray, OtherOperations) {
 		++k;
 		EXPECT_EQ(k, x);
 	}
+	EXPECT_EQ(arr[4], arr.size());
+	EXPECT_EQ(1, arr[0]);
+	EXPECT_EQ(short(2), arr[1]);
+	EXPECT_EQ(arr[2], (unsigned long long)(arr[arr[2] - 2] + 1));
 }
