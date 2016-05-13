@@ -50,4 +50,6 @@ TEST(jsonArray, OtherOperations) {
 	
 	arr.addValue("hello worl");
 	EXPECT_EQ(arr.back() + 'd', "hello world");
+	
+	EXPECT_GT(arr[3], arr[2]);
 }

@@ -618,5 +618,28 @@ bool operator==(const Value& a, const Value& b) {
 	
 	return false;
 }
+
+bool operator!=(const Value& a, const Value& b) { return !(a == b); }
+
+bool operator<(const Value& a, const Value& b) {
 	
+	if(a.getType() != b.getType()) return false;
+	
+	switch (a.getType()) {
+	case Value::NULL_TYPE: return false;
+	case Value::OBJECT_TYPE: return a.getObject() < b.getObject();
+	case Value::STRING_TYPE: return a.getString() < b.getString();
+	case Value::NUMBER_TYPE: return a.getNumber() < b.getNumber();
+	case Value::ARRAY_TYPE: return a.getArray() < b.getArray();
+	case Value::BOOLEAN_TYPE: return bool(a) < bool(b);
+	default: assert("should not be here" == 0);
+	}
+	
+	return false; // should not reach here 
+}
+
+bool operator>(const Value& a, const Value& b) { return b < a; }
+bool operator<=(const Value& a, const Value& b) { return !(a > b); }
+bool operator>=(const Value& a, const Value& b) { return !(a < b); }
+
 } // namespace Json

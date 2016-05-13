@@ -145,7 +145,13 @@ public:
 	friend Value operator+(const std::string& s, const Value& pt);
 	
 	friend bool operator==(const Value& a, const Value& b);
-	// TODO() : friend bool operator<(const Value& a, const Value& b);
+	friend bool operator!=(const Value& a, const Value& b);
+	
+	friend bool operator<(const Value& a, const Value& b);
+	friend bool operator>(const Value& a, const Value& b);
+	friend bool operator<=(const Value& a, const Value& b);
+	friend bool operator>=(const Value& a, const Value& b);
+	
 
 	friend std::ostream& operator<<(std::ostream& os, const Value& pt);
 	friend void toString(std::ostream& os, const Value& pt, 
@@ -166,39 +172,49 @@ private:
 };
 
 
+/*
+ * Macro for the relational operators definition between 
+ * Value(NUMBER_TYPE) and SOME_ARITHMETIC_TYPE, and its 
+ * commutative version. 
+ * (i.e. 1 < Value(1) and Value(1) >= 1)
+ */
+#define RELATIONAL_OPERATOR_DEFINITION(_OPERATOR) \
+	\
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
+	bool operator _OPERATOR (const Value& a, T b) { return a _OPERATOR Value(b); } \
+	\
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
+	bool operator _OPERATOR (T a, const Value& b) { return Value(a) _OPERATOR b; }
+
+RELATIONAL_OPERATOR_DEFINITION(==);
+RELATIONAL_OPERATOR_DEFINITION(!=);
+RELATIONAL_OPERATOR_DEFINITION(<);
+RELATIONAL_OPERATOR_DEFINITION(>);
+RELATIONAL_OPERATOR_DEFINITION(<=);
+RELATIONAL_OPERATOR_DEFINITION(>=);
 
 
 
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-bool operator==(const Value& a, T b) { return a == Value(b); }
+/*
+ * Macro for the arithmetic operators definition between 
+ * Value(NUMBER_TYPE) and SOME_ARITHMETIC_TYPE, and its 
+ * commutative version. 
+ * (i.e. 1 + Value(1) and Value(1) / 1)
+ */
+#define ARITHMETIC_OPERATOR_DEFINITION(_OPERATOR) \
+	\
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
+	Value operator _OPERATOR (const Value& pt, T num) { return pt _OPERATOR Value(num); } \
+	\
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
+	Value operator _OPERATOR (T num, const Value& pt) { return Value(num) _OPERATOR pt; }
 
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-bool operator==(T a, const Value& b) { return Value(a) == b; }
+ARITHMETIC_OPERATOR_DEFINITION(+);
+ARITHMETIC_OPERATOR_DEFINITION(-);
+ARITHMETIC_OPERATOR_DEFINITION(*);
+ARITHMETIC_OPERATOR_DEFINITION(/);
 
 
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator+(const Value& pt, T num) { return pt + Value(num); }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator+(T num, const Value& pt) { return Value(num) + pt; }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator-(const Value& pt, T num) { return pt - Value(num); }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator-(T num, const Value& pt) { return Value(num) - pt; }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator*(const Value& pt, T num) { return pt * Value(num); }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator*(T num, const Value& pt) { return Value(num) * pt; }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator/(const Value& pt, T num) { return pt / Value(num); }
-
-TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
-Value operator/(T num, const Value& pt) { return Value(num) / pt; }
 
 /* type conversion template from Value(NUMBER_TYPE) to SOME_ARITHMETIC_TYPE */
 TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
