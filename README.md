@@ -8,7 +8,7 @@
 
 
 ## Sample ##
-* Please see the [sample.cpp](sample/sample.cpp) for detials.
+* Please see the [sample4.cpp](sample/sample4.cpp) for detials.
 
 
 ## Features ##

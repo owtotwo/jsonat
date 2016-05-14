@@ -159,48 +159,10 @@ Value& Value::operator=(Value&& pt) {
 	return *this;
 } 
 
-Value& Value::operator=(String&& pt) {
-	if (string_ptr == &pt) return *this;
-	this->~Value();
-	type = Value::STRING_TYPE;
-	string_ptr = new String(std::move(pt));
-	return *this;
-} 
 
-Value& Value::operator=(Array&& pt) {
-	if (array_ptr == &pt) return *this;
-	this->~Value();
-	type = Value::ARRAY_TYPE;
-	array_ptr = new Array(std::move(pt));
-	return *this;
-}  
-
-Value& Value::operator=(Object&& pt) {
-	if (object_ptr == &pt) return *this;
-	this->~Value();
-	type = Value::OBJECT_TYPE;
-	object_ptr = new Object(std::move(pt));
-	return *this;
-} 
-
-Value& Value::operator=(Number&& pt) {
-	if (number_ptr == &pt) return *this;
-	this->~Value();
-	type = Value::NUMBER_TYPE;
-	number_ptr = new Number(std::move(pt));
-	return *this;
-} 
-
-Value& Value::operator=(Boolean&& pt) {
-	if (boolean_ptr == &pt) return *this;
-	this->~Value();
-	type = Value::BOOLEAN_TYPE;
-	boolean_ptr = new Boolean(std::move(pt));
-	return *this;
-} 
-
-
-
+Value& Value::operator=(const char* pt) { return *this = Value(pt); }
+Value& Value::operator=(const std::string& pt) { return *this = Value(pt); }
+Value& Value::operator=(bool pt) { return *this = Value(pt); }
 
 
 
@@ -352,61 +314,6 @@ Value& Value::operator=(const Value& pt) {
 	default:
 		assert("should not be here" == 0); 
 	}
-
-	return *this;
-}
-
-Value& Value::operator=(const String& pt) {
-	if (string_ptr == &pt) return *this;
-	
-	this->~Value();
-
-	type = Value::STRING_TYPE;
-	string_ptr = new String(pt);
-
-	return *this;
-}
-
-Value& Value::operator=(const Array& pt) {
-	if (array_ptr == &pt) return *this;
-	
-	this->~Value();
-
-	type = Value::ARRAY_TYPE;
-	array_ptr = new Array(pt);
-
-	return *this;
-}
-
-Value& Value::operator=(const Object& pt) {
-	if (object_ptr == &pt) return *this;
-	
-	this->~Value();
-
-	type = Value::OBJECT_TYPE;
-	object_ptr = new Object(pt);
-
-	return *this;
-}
-
-Value& Value::operator=(const Number& pt) {
-	if (number_ptr == &pt) return *this;
-	
-	this->~Value();
-
-	type = Value::NUMBER_TYPE;
-	number_ptr = new Number(pt);
-
-	return *this;
-}
-
-Value& Value::operator=(const Boolean& pt) {
-	if (boolean_ptr == &pt) return *this;
-	
-	this->~Value();
-
-	type = Value::BOOLEAN_TYPE;
-	boolean_ptr = new Boolean(pt);
 
 	return *this;
 }

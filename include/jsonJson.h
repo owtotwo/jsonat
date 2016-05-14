@@ -6,11 +6,8 @@
 #define JSON_JSON_H
 
 #include <iostream>
-#include <functional> // for function<>()
 #include "jsonValue.h" // for initializer_list<Value>
 
-// #include "jsonObject.h" // for "range-base for", for (auto x : value.getObject())
-// #include "jsonArray.h" // for "range-base for", for (auto x : value.getArray())
 
 namespace jsonat {
 
@@ -19,13 +16,15 @@ class Value;
 class Json : public Value {
 public:
 
+
 	using Value::Value;
 	using Value::operator=;
 
 	Json();
 	Json(const Value& pt);
 	Json(Value&& pt);
-
+	
+	
 	// ----------- API ------------
 	
 	
@@ -59,8 +58,8 @@ private:
 	
 using JSON = Json;
 
-extern std::function<decltype(Json::make_object)> makeObject; // JavaScript-like API
-extern std::function<decltype(Json::make_array)> makeArray; // JavaScript-like API
+Json makeObject(std::initializer_list<Value> il = {});
+Json makeArray(std::initializer_list<Value> il = {});
 	
 } // namespace jsonat
 

@@ -9,7 +9,10 @@
 #include "jsonValue.h"
 #include "gtest/gtest.h"
 
+#include "Json.h"
+
 using jsonat::Array;
+using jsonat::Value;
 
 TEST(jsonArray, Initialization) {
 	Array a;
@@ -34,6 +37,8 @@ TEST(jsonArray, AssignmentOperation) {
 	arr2 = std::move(arr1); // fast
 	Array arr3 = std::move(arr2); 
 	EXPECT_EQ(arr3.size(), scale);
+	jsonat::Json j;
+	j = Value(std::move(arr3));
 }
 
 TEST(jsonArray, OtherOperations) {

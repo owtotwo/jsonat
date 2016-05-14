@@ -92,18 +92,15 @@ public:
 	const Boolean& getBoolean() const;
 
 	Value& operator=(const Value& pt);
-	Value& operator=(const String& pt);
-	Value& operator=(const Array& pt) ;
-	Value& operator=(const Object& pt);
-	Value& operator=(const Number& pt);
-	Value& operator=(const Boolean& pt);
-	
 	Value& operator=(Value&& pt);
-	Value& operator=(String&& pt);
-	Value& operator=(Array&& pt);
-	Value& operator=(Object&& pt);
-	Value& operator=(Number&& pt);
-	Value& operator=(Boolean&& pt);
+
+	Value& operator=(const char* pt);
+	Value& operator=(const std::string& pt);
+	Value& operator=(bool pt);
+	
+	/* assignment operator template for SOME_ARITHMETIC_TYPE */
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+	Value& operator=(T pt);
 	
 	operator std::string() const;
 	operator bool() const;
@@ -255,6 +252,9 @@ Value& Value::operator[](T pos) { return this->operator[](size_t(pos)); }
 TEMPLATE_DEFINITION_HEADER_FOR_INTEGRAL(T)
 const Value& Value::operator[](T pos) const { return this->operator[](size_t(pos)); }
 
+/* assignment operator template for SOME_ARITHMETIC_TYPE */
+TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
+Value& Value::operator=(T pt) { return *this = Value(pt); }
 
 } // namespace Json
 

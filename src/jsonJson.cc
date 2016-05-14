@@ -28,7 +28,6 @@ Json::Json() : Value() {}
 Json::Json(const Value& pt) : Value(pt) {}
 Json::Json(Value&& pt) : Value(std::move(pt)) {}
 
-
 // ----------- Json API implement -----------
 
 static Value parse_Json(std::istream& is);
@@ -90,9 +89,8 @@ Json Json::make_object(std::initializer_list<Value> il) {
 
 Json Json::make_array(std::initializer_list<Value> il) { return Array(il); }
 
-std::function<decltype(Json::make_object)> makeObject = Json::make_object;
-std::function<decltype(Json::make_array)> makeArray = Json::make_array;
-
+Json makeObject(std::initializer_list<Value> il) { return Json::make_object(il); }
+Json makeArray(std::initializer_list<Value> il) { return Json::make_array(il); }
 
 // ============================= Detail ============================
 

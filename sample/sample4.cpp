@@ -93,6 +93,7 @@ void sample() {
 	
 	std::cout << "b.size() == " << b.size() << '\n'; // should be 1
 	
+	
 	/*
 	 * Json c = {{"hello", "world"}}; // is equivalent to {"hello":"world"}.
 	 * If you want to make an Array instead of an Object, you could code like
@@ -101,18 +102,15 @@ void sample() {
 	 */
 	Json c = {{"hello", "world"}};
 	Json d = makeArray({{"hello", "world"}});
-	std::cout << (c.isObject() ? 
-		"Json c = {{\"hello\", \"world\"}} is an Object [].\n" : 
-		"Json c = {{\"hello\", \"world\"}} is not an Object [].\n"
-	);
+	
+	std::cout << "Json c = {{\"hello\", \"world\"}} is" 
+		<< (c.isObject() ? "" : " not") << " an Object [].\n";
+	std::cout << "Json d = makeArray({{\"hello\", \"world\"}}) is" 
+		<< (d.isArray() ? "" : " not") << " an Array [].\n";
+		
 	std::cout << "c[\"hello\"] == " << c["hello"] << '\n';
-	std::cout << (d.isArray() ? 
-		"Json d = makeArray({{\"hello\", \"world\"}}) is an Array [].\n" : 
-		"Json d = makeArray({{\"hello\", \"world\"}}) is not an Array [].\n"
-	);
 	std::cout << "d.size() == " << d.size() << '\n'; // should be 1
-	// std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
-	std::cout << d[0] << '\n';
+	std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
 }
 
 int main() {
