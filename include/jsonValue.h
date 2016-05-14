@@ -48,12 +48,15 @@ public:
 
 	Value(const char* pt);
 	Value(const std::string& pt);
-	Value(int n);
 	Value(bool x);
+#if 0
+	Value(int n);
 	Value(unsigned int);
 	Value(long long int);
 	Value(long long unsigned int);
-	
+#endif
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) Value(T pt);
+
 	Value(std::initializer_list<Value> il);
 	Value(String&& pt);
 	Value(Object&& pt);
@@ -219,6 +222,9 @@ ARITHMETIC_OPERATOR_DEFINITION(/);
 /* type conversion template from Value(NUMBER_TYPE) to SOME_ARITHMETIC_TYPE */
 TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
 Value::operator T() const { return double(*this); }
+
+TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
+Value::Value(T pt) : Value::Value(Number(pt)) {}
 
 
 } // namespace Json
