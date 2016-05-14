@@ -71,6 +71,48 @@ void sample() {
 	
 	std::cout << std::endl << "id list: " << id_list << std::endl;
 	
+	
+	/* 
+	 * If you want to put only one value which is a variable in type 
+	 * of Array in an Array, you should use function makeArray to make
+	 * sure that it will call the Array(initializer_list<Value> il) 
+	 * instead of copy constructor.
+	 * For instance: 
+	 *   Json a = makeArray({}); // or Json a({}) which will call Array()
+	 *   Json b = {a}; // Bad. g++ will call Json(initializer_list<Value> il)
+	 *                 // but clang++ will call Json(const Json& pt) 
+	 *   Json b = makeArray({a}); // Nice.
+	 */
+	Json a({}); // no equivalent to Json a{};
+	Json b = makeArray({a});
+	
+	std::cout << (a.isArray() ? 
+		"Json a({}) is an Array [].\n" : 
+		"Json a({}) is not an Array [].\n"
+	);
+	
+	std::cout << "b.size() == " << b.size() << '\n'; // should be 1
+	
+	/*
+	 * Json c = {{"hello", "world"}}; // is equivalent to {"hello":"world"}.
+	 * If you want to make an Array instead of an Object, you could code like
+	 * this :
+	 *   Json d = makeArray({{"hello", "world"}});
+	 */
+	Json c = {{"hello", "world"}};
+	Json d = makeArray({{"hello", "world"}});
+	std::cout << (c.isObject() ? 
+		"Json c = {{\"hello\", \"world\"}} is an Object [].\n" : 
+		"Json c = {{\"hello\", \"world\"}} is not an Object [].\n"
+	);
+	std::cout << "c[\"hello\"] == " << c["hello"] << '\n';
+	std::cout << (d.isArray() ? 
+		"Json d = makeArray({{\"hello\", \"world\"}}) is an Array [].\n" : 
+		"Json d = makeArray({{\"hello\", \"world\"}}) is not an Array [].\n"
+	);
+	std::cout << "d.size() == " << d.size() << '\n'; // should be 1
+	// std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
+	std::cout << d[0] << '\n';
 }
 
 int main() {

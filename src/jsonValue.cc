@@ -91,15 +91,8 @@ Value::Value(const std::string& pt) : Value::Value(String(pt)) {}
 
 Value::Value(bool x) : Value::Value(Boolean(x)) {}
 
-#if 0
-Value::Value(int pt) : Value::Value(Number(pt)) {}
-Value::Value(unsigned int pt) : Value::Value(Number(pt)) {}
-Value::Value(long long int pt) : Value::Value(Number(pt)) {}
-Value::Value(long long unsigned int pt) : Value::Value(Number(pt)) {}
-#endif
-
 Value::Value(std::initializer_list<Value> il) {
-	if (il.size() == 0) return; // set type = NULL_TYPE
+	if (il.size() == 0) { *this = Array(); return; } // set type = ARRAY_TYPE and make it empty
 
 	// type deduction
 	// if Value is {String, Value} then create an Object, otherwise create an Array.

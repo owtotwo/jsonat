@@ -14,8 +14,8 @@
 namespace jsonat {
 
 /*
- * is_arithmetic means is_integral_types(int, bool, char, short int ...) or 
- * is_floating_point_types(float, double, long double).
+ * is_arithmetic means is_integral(int, bool, char, short int ...) or 
+ * is_floating_point(float, double, long double).
  * http://www.cplusplus.com/reference/type_traits/is_arithmetic/
  */
 #define TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) \
@@ -23,6 +23,19 @@ namespace jsonat {
 	typename = typename std::enable_if<std::is_arithmetic< T >::value>::type >
 #define TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T) \
 	template < typename T, typename >
+	
+/*
+ * is_integral => bool, char, char16_t, char32_t, wchar_t, 
+ * signed char, short int, int, long int, long long int, 
+ * and their unsigned version.
+ * http://www.cplusplus.com/reference/type_traits/is_integral/
+ */
+#define TEMPLATE_DECLARED_HEADER_FOR_INTEGRAL(T) \
+	template < typename T, \
+	typename = typename std::enable_if<std::is_integral< T >::value>::type >
+#define TEMPLATE_DEFINITION_HEADER_FOR_INTEGRAL(T) \
+	template < typename T, typename >
+
 
 // Forward declaration
 class Object;
@@ -49,13 +62,10 @@ public:
 	Value(const char* pt);
 	Value(const std::string& pt);
 	Value(bool x);
-#if 0
-	Value(int n);
-	Value(unsigned int);
-	Value(long long int);
-	Value(long long unsigned int);
-#endif
-	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) Value(T pt);
+
+	/* The substitution of all constructors like Value(int) or Value(unsigned long) */
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) 
+	Value(T pt);
 
 	Value(std::initializer_list<Value> il);
 	Value(String&& pt);
@@ -100,11 +110,19 @@ public:
 	operator double() const;
 	
 	/* type conversion template from Value(NUMBER_TYPE) to SOME_ARITHMETIC_TYPE */
-	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T)
+	TEMPLATE_DECLARED_HEADER_FOR_ARITHMETIC(T) 
 	operator T() const;
 	
 	// ------------------- New part -------------------
 	Value& operator[](size_t pos);
+	const Value& operator[](size_t pos) const;
+	
+	TEMPLATE_DECLARED_HEADER_FOR_INTEGRAL(T) 
+	Value& operator[](T pos);
+	TEMPLATE_DECLARED_HEADER_FOR_INTEGRAL(T) 
+	const Value& operator[](T pos) const;
+	
+	
 	Value& operator[](const String& key);
 	Value& operator[](const char* key);
 	
@@ -175,6 +193,8 @@ private:
 };
 
 
+
+
 /*
  * Macro for the relational operators definition between 
  * Value(NUMBER_TYPE) and SOME_ARITHMETIC_TYPE, and its 
@@ -223,8 +243,17 @@ ARITHMETIC_OPERATOR_DEFINITION(/);
 TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
 Value::operator T() const { return double(*this); }
 
+/* The substitution of all constructors like Value(int) or Value(unsigned long) */
 TEMPLATE_DEFINITION_HEADER_FOR_ARITHMETIC(T)
 Value::Value(T pt) : Value::Value(Number(pt)) {}
+
+
+/* i.e. : Value a({1, 2, 3}); a[1] == 2; */
+TEMPLATE_DEFINITION_HEADER_FOR_INTEGRAL(T)
+Value& Value::operator[](T pos) { return this->operator[](size_t(pos)); }
+
+TEMPLATE_DEFINITION_HEADER_FOR_INTEGRAL(T)
+const Value& Value::operator[](T pos) const { return this->operator[](size_t(pos)); }
 
 
 } // namespace Json
