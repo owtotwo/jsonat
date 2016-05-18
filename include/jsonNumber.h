@@ -9,6 +9,7 @@
 #include <cmath> // for modf
 #include <sstream>
 #include <string>
+#include <cassert>
 
 namespace jsonat {
 
@@ -21,14 +22,23 @@ inline bool isInteger(const Number& pt) {
 inline void toString(std::ostream& os, const Number& pt) {
 	// if is integer, then convert to long long and output
 	if (isInteger(pt)) {
+		
 		os << static_cast<long long>(pt);
+		
 	} else {
+		
 		std::stringstream ss;
 		std::string str;
+		
 		ss.precision(15);
 		ss << std::fixed << pt;
 		ss >> str;
-		os << str.erase(str.find_last_not_of('0') + 1);
+		
+		size_t pos = str.find_last_not_of('0');
+		assert(pos != std::string::npos);
+		if (pos + 1 < str.length()) str.erase(pos + 1); // has extra trailing zeros
+		
+		os << str;
 	}
 }
 
