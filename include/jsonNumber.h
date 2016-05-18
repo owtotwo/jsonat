@@ -27,7 +27,7 @@ inline void toString(std::ostream& os, const Number& pt) {
 	if (isInteger(pt)) {
 		if (pt >= 1e16) {
 			os.precision(16);
-			os << std::defaultfloat << double(pt);
+			os << std::scientific << double(pt);
 		} else {
 			os.precision(0);
 			os << std::fixed << std::showpoint << std::noshowpoint << double(pt);
@@ -40,7 +40,7 @@ inline void toString(std::ostream& os, const Number& pt) {
 		if (pt < 1e-6) {
 			
 			os.precision(16);
-			os << std::defaultfloat << double(pt);
+			os << std::scientific << double(pt);
 			
 		} else {
 			
