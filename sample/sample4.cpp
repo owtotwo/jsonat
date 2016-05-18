@@ -110,16 +110,16 @@ void sample() {
 		
 	c["AT_University"] = "SYSU";
 	c["outer"]["inner"] = 3.1415926;
+	c["No"] = 15331120;
+	c["Yes"] = 0.1 + 0.2;
 	std::cout << "c[\"hello\"] == " << c["hello"] << '\n';
 	std::cout << "c[\"AT_University\"] == " << c["AT_University"] << '\n';
 	std::cout << "c[\"outer\"][\"inner\"] = " << c["outer"]["inner"] << '\n';	
 	std::cout << "d.size() == " << d.size() << '\n'; // should be 1
 	std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
-	
 	std::cout << "\nc : \n" << c << '\n';
 	
 	std::cout << "sizeof Json : " << sizeof(Json) << '\n';
-	std::cout << "sizeof Value : " << sizeof(jsonat::Value) << '\n';
 }
 
 int main() {

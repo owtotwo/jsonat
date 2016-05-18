@@ -276,7 +276,7 @@ std::ostream& operator<<(std::ostream& os, const Value& pt) {
 		os << pt.getString();
 		break;
 	case Value::NUMBER_TYPE:
-		os << pt.getNumber();
+		toString(os, pt.getNumber());
 		break;
 	case Value::ARRAY_TYPE:
 		os << pt.getArray();

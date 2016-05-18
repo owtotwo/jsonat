@@ -15,11 +15,11 @@
 3. make_array() and make_object();
 4. apply the jsonat in another project to read and write the configure files.
 5. it should be able to use like a["address"]["street"], or b[4][1].
-6. maybe support the comments...? (not the standard in JSON)
+6. maybe support the comments...? (not the standard in JSON) // will not do this
    i.e. : {"age" : "18" /* this is the comment */} // all right a comment too
    I think it could implement by two pass parsing. (first for the comments, 
    second for the data)
-7. roundtrip test.
+7. roundtrip test. // Done.
 8. When I see the API of MySQL connect Java (Class ResultSet), I think it is 
    what I want to design... for the configure files saving and loading, like 
    a database but concise and simple use.
@@ -36,4 +36,4 @@
    f[0][0] == "a";
    f[1][1] == 2;
 10. State exceptions and errors.
-11. It seems not to support the big integer like 15331120.
+11. It seems not to support the big integer like 15331120. // Done.
