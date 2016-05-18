@@ -121,7 +121,9 @@ public:
 	
 	
 	Value& operator[](const String& key);
+	const Value& operator[](const String& key) const;
 	Value& operator[](const char* key);
+	const Value& operator[](const char* key) const;
 	
 	size_t size() const;
 

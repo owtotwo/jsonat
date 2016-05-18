@@ -108,9 +108,15 @@ void sample() {
 	std::cout << "Json d = makeArray({{\"hello\", \"world\"}}) is" 
 		<< (d.isArray() ? "" : " not") << " an Array [].\n";
 		
+	c["AT_University"] = "SYSU";
+	c["outer"]["inner"] = 3.1415926;
 	std::cout << "c[\"hello\"] == " << c["hello"] << '\n';
+	std::cout << "c[\"AT_University\"] == " << c["AT_University"] << '\n';
+	std::cout << "c[\"outer\"][\"inner\"] = " << c["outer"]["inner"] << '\n';	
 	std::cout << "d.size() == " << d.size() << '\n'; // should be 1
 	std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
+	
+	std::cout << "\nc : \n" << c << '\n';
 }
 
 int main() {

@@ -350,12 +350,27 @@ Value& Value::operator[](size_t pos) {
 	return (*array_ptr).at(pos);
 }
 
+const Value& Value::operator[](size_t pos) const {
+	if (type != Value::ARRAY_TYPE) throw std::domain_error("type should be value::ARRAY_TYPE");
+	return (*array_ptr).at(pos);
+}
+
 Value& Value::operator[](const String& key) {
+	if (type == Value::NULL_TYPE) (*this) = Object();
 	if (type != Value::OBJECT_TYPE) throw std::domain_error("type should be value::OBJECT_TYPE");
-	return (*object_ptr).at(key);
+	return (*object_ptr)[key];
+}
+
+const Value& Value::operator[](const String& key) const {
+	if (type != Value::OBJECT_TYPE) throw std::domain_error("type should be value::OBJECT_TYPE");
+	return (*object_ptr)[key];
 }
 
 Value& Value::operator[](const char* key) {
+	return this->operator[](String(key));
+}
+
+const Value& Value::operator[](const char* key) const {
 	return this->operator[](String(key));
 }
 

@@ -9,6 +9,23 @@
 
 ## Sample ##
 * Please see the [sample4.cpp](sample/sample4.cpp) for detials.
+```
+using jsonat::Json; // or jsonat::JSON
+using jsonat::makeArray; // or Json::make_array;
+using jsonat::makeObject; // or Json::make_object;
+
+Json a; // NULL_TYPE
+Json b = 15331120; // NUMBER_TYPE
+Json c = 3.1415926; // NUMBER_TYPE
+Json d = "hello"; // STRING_TYPE
+Json e = true; // BOOLEAN_TYPE
+Json f = {{"shape", "rectangle"}, {"length", 12}, {"width", c}}; // OBJECT_TYPE
+Json g = {a, b, c, d, "Literal", e, f}; // ARRAY_TYPE
+
+f["color"] = "red";
+a["author"]["university"] = "SYSU";
+
+```
 
 
 ## Features ##
@@ -34,9 +51,9 @@
 
 
 ## How To Use ##
-* `$make`  
-* `$make test`  
-* `$make sample`  
+* `$> make`  
+* `$> make test`  
+* `$> make sample`  
 
 
 ## Related Projects ##
