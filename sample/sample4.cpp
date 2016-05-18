@@ -117,6 +117,9 @@ void sample() {
 	std::cout << "d[0].size() == " << d[0].size() << '\n'; // should be 2
 	
 	std::cout << "\nc : \n" << c << '\n';
+	
+	std::cout << "sizeof Json : " << sizeof(Json) << '\n';
+	std::cout << "sizeof Value : " << sizeof(jsonat::Value) << '\n';
 }
 
 int main() {

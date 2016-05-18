@@ -184,11 +184,13 @@ public:
 	
 private:
 	Value_type type = NULL_TYPE;
-	Object* object_ptr = nullptr;
-	String* string_ptr = nullptr;
-	Number* number_ptr = nullptr;
-	Array* array_ptr = nullptr;
-	Boolean* boolean_ptr = nullptr;
+	union {
+		Object* object_ptr = nullptr;
+		String* string_ptr;
+		Number* number_ptr;
+		Array* array_ptr;
+		Boolean* boolean_ptr;
+	};
 };
 
 

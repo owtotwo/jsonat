@@ -8,7 +8,15 @@
 
 namespace jsonat {
 
+#if 1
 typedef double Number;
+#else
+
+class Number {
+	
+};
+
+#endif
 
 inline void toString(std::ostream& os, const Number& pt) { os << pt; }
 
