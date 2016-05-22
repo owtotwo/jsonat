@@ -89,8 +89,26 @@ Json Json::make_object(std::initializer_list<Value> il) {
 
 Json Json::make_array(std::initializer_list<Value> il) { return Array(il); }
 
+const Object& Json::getObject() const {
+	if (this->getType() != Value::OBJECT_TYPE)
+		throw std::domain_error("type should be value::OBJECT_TYPE");
+	return Value::getObject();
+}
+
+const Array& Json::getArray() const {
+	if (this->getType() != Value::ARRAY_TYPE)
+		throw std::domain_error("type should be value::ARRAY_TYPE");
+	return Value::getArray();
+}
+
+
+
 Json makeObject(std::initializer_list<Value> il) { return Json::make_object(il); }
 Json makeArray(std::initializer_list<Value> il) { return Json::make_array(il); }
+
+	
+
+
 
 // ============================= Detail ============================
 

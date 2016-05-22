@@ -1,0 +1,13 @@
+{
+    "campus_cards": [
+        {
+            "balance": 0, 
+            "college": "CSIT", 
+            "holder": "AT", 
+            "id": 1, 
+            "password": "123456789", 
+            "student_id": 806425
+        }
+    ], 
+    "update_time": "Sun May 22 16:55:25 2016"
+}

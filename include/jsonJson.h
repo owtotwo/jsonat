@@ -51,6 +51,9 @@ public:
 		
 	static Json make_object(std::initializer_list<Value> il = {});
 	static Json make_array(std::initializer_list<Value> il = {});
+	
+	const Object& getObject() const;
+	const Array& getArray() const;
 		
 private:
 	/* nothing */
