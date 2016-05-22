@@ -16,7 +16,6 @@ class Value;
 class Json : public Value {
 public:
 
-
 	using Value::Value;
 	using Value::operator=;
 
