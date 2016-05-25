@@ -12,6 +12,7 @@
 #include <algorithm> // for all_of()
 #include <cassert>
 #include <functional> // for function<>()
+#include <stdexcept>
 
 #include "jsonJson.h"
 

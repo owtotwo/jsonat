@@ -24,4 +24,4 @@ before_install:
   - if [ "$CXX" = "g++" ] && [ "$TRAVIS_OS_NAME" == "linux" ]; then g++-4.8 -v; fi
 
 # maybe 'make && make test && make sample && make clean-all'
-script:  make && make test && ./test-all && cat test/roundtrip_data_tmp1.json
+script:  make && make test && ./test-all
